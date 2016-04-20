@@ -1,0 +1,177 @@
+
+Edge_Detect Results:
+Source Results:
+Total Score: 0.90/1.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.100/0.200
+   d_edge was correctly a logic zero during reset assertion phase of Power-on-Reset Case
+   d_edge was stable during reset assertion phase of Power-on-Reset Case
+   d_edge was not stable during reset release phase of Power-on-Reset Case
+  Test case 1: 0.200/0.200
+  Test case 2: 0.200/0.200
+  Test case 3: 0.200/0.200
+  Test case 4: 0.200/0.200
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+Mapped Results:
+Total Score: 0.90/1.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.100/0.200
+   d_edge was correctly a logic zero during reset assertion phase of Power-on-Reset Case
+   d_edge was stable during reset assertion phase of Power-on-Reset Case
+   d_edge was not stable during reset release phase of Power-on-Reset Case
+  Test case 1: 0.200/0.200
+  Test case 2: 0.200/0.200
+  Test case 3: 0.200/0.200
+  Test case 4: 0.200/0.200
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+
+Eop_Detect Results:
+Source Results:
+Total Score: 0.75/1.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.250/0.250
+  Test case 1: 0.250/0.250
+  Test case 2: 0.250/0.250
+  Test case 3: 0.000/0.250
+   Input Pair
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+Mapped Results:
+Total Score: 0.75/1.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.250/0.250
+  Test case 1: 0.250/0.250
+  Test case 2: 0.250/0.250
+  Test case 3: 0.000/0.250
+   Input Pair
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+
+Decode Results:
+Source Results:
+Total Score: 1.13/2.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.125/0.500
+   d_orig was incorrectly not a logic one during reset assertion phase of Power-on-Reset Case
+   d_orig was stable during reset assertion phase of Power-on-Reset Case
+   d_orig was not stable during reset release phase of Power-on-Reset Case
+  Test case 1: 0.250/0.250
+  Test case 2: 0.125/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 2
+   d_orig was stable during first bit wait phase of Bit Sequence 2
+   d_orig was incorrect during first bit storing phase of Bit Sequence 2
+   d_orig was incorrect during second bit arrival phase of Bit Sequence 2
+   d_orig was stable during second bit wait phase of Bit Sequence 2
+   d_orig was incorrect during second bit storing phase of Bit Sequence 2
+  Test case 3: 0.167/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 3
+   d_orig was stable during first bit wait phase of Bit Sequence 3
+   d_orig was incorrect during first bit storing phase of Bit Sequence 3
+   d_orig was incorrect during second bit arrival phase of Bit Sequence 3
+   d_orig was stable during second bit wait phase of Bit Sequence 3
+   d_orig was correct during second bit storing phase of Bit Sequence 3
+  Test case 4: 0.208/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 4
+   d_orig was stable during first bit wait phase of Bit Sequence 4
+   d_orig was correct during first bit storing phase of Bit Sequence 4
+   d_orig was correct during second bit arrival phase of Bit Sequence 4
+   d_orig was stable during second bit wait phase of Bit Sequence 4
+   d_orig was incorrect during second bit storing phase of Bit Sequence 4
+  Test case 5: 0.000/0.250
+   d_orig was incorrect during eop only check phase of EOP w/o Shift_Enable Case
+  Test case 6: 0.250/0.250
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+Mapped Results:
+Total Score: 1.13/2.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 0: 0.125/0.500
+   d_orig was incorrectly not a logic one during reset assertion phase of Power-on-Reset Case
+   d_orig was stable during reset assertion phase of Power-on-Reset Case
+   d_orig was not stable during reset release phase of Power-on-Reset Case
+  Test case 1: 0.250/0.250
+  Test case 2: 0.125/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 2
+   d_orig was stable during first bit wait phase of Bit Sequence 2
+   d_orig was incorrect during first bit storing phase of Bit Sequence 2
+   d_orig was incorrect during second bit arrival phase of Bit Sequence 2
+   d_orig was stable during second bit wait phase of Bit Sequence 2
+   d_orig was incorrect during second bit storing phase of Bit Sequence 2
+  Test case 3: 0.167/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 3
+   d_orig was stable during first bit wait phase of Bit Sequence 3
+   d_orig was incorrect during first bit storing phase of Bit Sequence 3
+   d_orig was incorrect during second bit arrival phase of Bit Sequence 3
+   d_orig was stable during second bit wait phase of Bit Sequence 3
+   d_orig was correct during second bit storing phase of Bit Sequence 3
+  Test case 4: 0.208/0.250
+   d_orig was correct during first bit arrival phase of Bit Sequence 4
+   d_orig was stable during first bit wait phase of Bit Sequence 4
+   d_orig was correct during first bit storing phase of Bit Sequence 4
+   d_orig was correct during second bit arrival phase of Bit Sequence 4
+   d_orig was stable during second bit wait phase of Bit Sequence 4
+   d_orig was incorrect during second bit storing phase of Bit Sequence 4
+  Test case 5: 0.000/0.250
+   d_orig was incorrect during eop only check phase of EOP w/o Shift_Enable Case
+  Test case 6: 0.250/0.250
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+
+Coverage Results from Running tb_eop_detect.sv for 100us:
+Source Results:
+Total Score: 0.85/1.00
+Mapped Results:
+Total Score: 1.00/1.00
+
+Test Case Tracking Results from Running tb_rx_fifo.sv for 100us:
+Source Results:
+Total Score: 0.60/1.00
+Score breakdown by test case:
+ Results for basic test cases:
+  Test case 1: 0.200/0.200
+  Test case 2: 0.200/0.200
+  Test case 3: 0.200/0.200
+  Test case 4: 0.000/0.200
+   FIFO fill test was not found
+  Test case 5: 0.000/0.200
+   FIFO full drain test was not found
+As this is supposed to be used to grade a functional design that you have
+already throughly tested, the more advanced test cases will not contribute
+points to your score until all of the Basic test cases are 100% satisfied.
+Additionally the results of the more advanced test cases will not be reported
+to you until all of the Basic test cases are 100% satisfied.
+
+
+You have used 1 out of 3 submission attempts on Lab 6 Phase I
