@@ -10,7 +10,6 @@
 module transmit(
 		input wire  clk,
 		input wire  n_rst,
-		input wire  t_enable,
 		input wire  eop;
 		input wire  data,
 		output wire d_plus,
