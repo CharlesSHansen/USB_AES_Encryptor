@@ -1,12 +1,12 @@
 // $Id: $
-// File name:   do_fifo.sv
+// File name:   dcrc_fifo.sv
 // Created:     4/23/2016
 // Author:      Charles Hansen
 // Lab Section: 337-04
 // Version:     1.0  Initial Design Entry
-// Description: Fifo holding the order that packets are recieved in
+// Description: Fifo for holding crc16 padding at end of data packet
 
-module do_fifo (
+module dcrc_fifo (
 		  input wire 	   clk,
 		  input wire 	   n_rst,
 		  input wire 	   r_enable,
@@ -17,7 +17,7 @@ module do_fifo (
 		  output wire 	   full
 		  );
 
-   fifo #(4,79,8) CALL(
+   fifo #(4,64,8) CALL(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .r_enable(r_enable),

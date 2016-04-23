@@ -35,8 +35,8 @@ module flex_fifo
       end else begin
 	 memory <= nxt_memory;
       end
-   end // always_ff @
-   
+   end
+      
    flex_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used));
    flex_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used));
 
