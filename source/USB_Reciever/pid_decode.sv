@@ -11,10 +11,10 @@
  Instead of information going directly to RX_FIFO, it is captured by pid_decode.  Since the first 8 bits will be the packet id, if it is a data packet it will be sent to rx_fifo and if not it will be sent to non-data packet transmission. 
  */
 
-             /* TO DO */
+/* TO DO */
 //Send data to appropriate locations
 //Reroute modules to go through decode
-      //Shift_register, RCU
+//Shift_register, RCU
 //Add pid_decode to the Top level
 
 module pid_decode(
@@ -25,12 +25,13 @@ module pid_decode(
 		  input wire [7:0]  w_data,
 		  output wire [7:0] r_data,
 		  output wire 	    empty,
-		  output wire 	    
+		  output wire 	    full
 		  );
 
-   reg [8:0] 			    num_bits;
+   reg [1:0] 			    cycles_sleep;
    reg [1:0] 			    packet_type;
-   
+
+   reg [7:0] 			    next_write;
    //Token Packets
    localparam [3:0] 			    token1 = 4'b0001;
    localparam [3:0] 			    token2 = 4'b1001;
@@ -56,26 +57,51 @@ module pid_decode(
     wire [3:0] 			    spec4 = 4'b0100;
     */
    
+   always_ff @ (posedge clk, negedge n_rst) begin
+      if(n_rst == 1'b0)
+	next_write = 0;
+      else
+	next_write = w_data;
+   end
+
    always_comb begin
       /*
        Deal with the packet type and store the number bits that will be recieved.  
        */
-      if((w_data[7:4] == token1) || (w_data[7:4] == token2) || (w_data[7:4] == token3) || (w_data[7:4] == token4)) begin
-	 num_bits = 9'hF8;
-	 packet_type = 2'b00;
-      end
-      else if((w_data[7:4] == data1) || (w_data[7:4] == data2) || (w_data[7:4] == data3) || (w_data[7:4] == data4)) begin
-	 num_bits = 9'FF;
-	 packet_type = 2'b01;
-      end
-      else if((w_data[7:4] == hand1) || (w_data[7:4] == hand2) || (w_data[7:4] == hand3) || (w_data[7:4] == hand4)) begin
-	 num_bits = 9'h8;
-	 packet_type = 2'b10;
-      end
-      else begin
-	 num_bits = 9'hF8;
-	 packet_type = 2'b11;
+      if(cycles_sleep == 0) begin
+	 if((w_data[7:4] == token1) || (w_data[7:4] == token2) || (w_data[7:4] == token3) || (w_data[7:4] == token4)) begin
+	    cycles_sleep = 2'b10;
+	    packet_type = 2'b00;
+	 end
+	 else if((w_data[7:4] == data1) || (w_data[7:4] == data2) || (w_data[7:4] == data3) || (w_data[7:4] == data4)) begin
+	    cycles_sleep = 2'b11;
+	    packet_type = 2'b01;
+	 end
+	 else if((w_data[7:4] == hand1) || (w_data[7:4] == hand2) || (w_data[7:4] == hand3) || (w_data[7:4] == hand4)) begin
+	    cycles_sleep = 2'b01;
+	    packet_type = 2'b10;
+	 end
+	 else begin
+	    cycles_sleep = 2'b10;
+	    packet_type = 2'b11;
+	 end
+      end // if (packet_type == 0)
+      if(w_enable) begin
+	 if(packet_type = 2'b01) begin
+	    if(cycles_sleep = 2'b10) begin
+	       //call data pid fifo
+	    end
+	    else if(cycles_sleep = 2'b01) begin
+	       //call data_fifo
+	    end
+	    else begin
+	       //call data_crc16_fifo
+	    end
+	 else begin
+	   
+	       
+	      
+	      
       end
    end // always_comb
-   
 endmodule // pid_decode
