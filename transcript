@@ -1,0 +1,105 @@
+# //  Questa Sim-64
+# //  Version 10.3b linux_x86_64 May 29 2014
+# //
+# //  Copyright 1991-2014 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //
+vlib work
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:53:18 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(28): near ")": Missing port in ansi port list.
+# End time: 17:53:18 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 17:56:46 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(28): near ")": Missing port in ansi port list.
+# End time: 17:56:46 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:00:54 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(28): near ")": Missing port in ansi port list.
+# End time: 18:00:54 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:01:46 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(73): (vlog-2730) Undefined variable: 'enable_pid'.
+# ** Error: source/USB_Reciever/pid_decode.sv(84): (vlog-2730) Undefined variable: 'PID'.
+# ** Error: source/USB_Reciever/pid_decode.sv(142): near "end": syntax error, unexpected end
+# End time: 18:01:46 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:01:55 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(84): (vlog-2730) Undefined variable: 'PID'.
+# ** Error: source/USB_Reciever/pid_decode.sv(142): near "end": syntax error, unexpected end
+# End time: 18:01:55 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:02:25 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(141): near "end": syntax error, unexpected end
+# End time: 18:02:25 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:03:16 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# ** Error: source/USB_Reciever/pid_decode.sv(71): (vlog-2110) Illegal reference to net "enable_pad".
+# ** Error: source/USB_Reciever/pid_decode.sv(72): (vlog-2110) Illegal reference to net "enable_data".
+# ** Error: source/USB_Reciever/pid_decode.sv(73): (vlog-2110) Illegal reference to net "enable_pid".
+# ** Error: source/USB_Reciever/pid_decode.sv(74): (vlog-2110) Illegal reference to net "enable_nondata".
+# ** Error: source/USB_Reciever/pid_decode.sv(75): (vlog-2110) Illegal reference to net "w_data".
+# ** Error: source/USB_Reciever/pid_decode.sv(84): (vlog-2110) Illegal reference to net "enable_pid".
+# ** Error: source/USB_Reciever/pid_decode.sv(110): (vlog-2110) Illegal reference to net "enable_nondata".
+# ** Error: source/USB_Reciever/pid_decode.sv(121): (vlog-2110) Illegal reference to net "enable_data".
+# ** Error: source/USB_Reciever/pid_decode.sv(134): (vlog-2110) Illegal reference to net "enable_pad".
+# End time: 18:03:16 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 9, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:04:11 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# 
+# Top level modules:
+# 	pid_decode
+# End time: 18:04:11 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog source/USB_Reciever/pid_decode.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:08:41 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/pid_decode.sv 
+# -- Compiling module pid_decode
+# 
+# Top level modules:
+# 	pid_decode
+# End time: 18:08:41 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

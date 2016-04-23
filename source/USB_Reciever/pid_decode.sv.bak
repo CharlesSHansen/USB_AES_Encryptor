@@ -22,6 +22,7 @@ module pid_decode(
 		  input wire 	    n_rst,
 		  input wire 	    w_enable,
 		  input wire [7:0]  rcv_data,
+		  output reg [7:0] w_data,
 		  output logic 	    enable_pad,
 		  output logic	    enable_data,
 		  output logic	    enable_pid,
@@ -71,6 +72,7 @@ always_comb begin
 	enable_data = 0;
 	enable_pid = 0;
 	enable_nondata = 0;
+	w_data = rcv_data;
 	next_state = state;
 
 	case(state)
@@ -81,17 +83,17 @@ always_comb begin
 		begin
 			enable_pid = 1; //write PID to the pid_fifo from w_data
 			//decide what type of packet was just received
-			if ((rcv_data[7:4] == data1) || (rcv_data[7:4] == data2) || (rcv_data[7:4] == data3) || (rcv_data[7:4] == data4))
+			if ((w_data[7:4] == data1) || (w_data[7:4] == data2) || (w_data[7:4] == data3) || (w_data[7:4] == data4))
 				next_state = DATA;
 			else
 				next_state = NON_DATA;
-				if((rcv_data[7:4] == token1) || (rcv_data[7:4] == token2) || (rcv_data[7:4] == token3) || (rcv_data[7:4] == token4))
+				if((w_data[7:4] == token1) || (w_data[7:4] == token2) || (w_data[7:4] == token3) || (w_data[7:4] == token4))
 				begin
 					packet_counter = 2; // 2 bytes of token packet 
-				end else if((rcv_data[7:4] == hand1) || (rcv_data[7:4] == hand2) || (rcv_data[7:4] == hand3) || (rcv_data[7:4] == hand4))
+				end else if((w_data[7:4] == hand1) || (w_data[7:4] == hand2) || (w_data[7:4] == hand3) || (w_data[7:4] == hand4))
 				begin
 					next_state = IDLE; // only pid in handshake
-				end else if((rcv_data[7:4] == spec1) || (rcv_data[7:4] == spec2) || (rcv_data[7:4] == spec3) || (rcv_data[7:4] == spec4))
+				end else if((w_data[7:4] == spec1) || (w_data[7:4] == spec2) || (w_data[7:4] == spec3) || (w_data[7:4] == spec4))
 				begin
 					packet_counter = 2; // 2 bytes of start of frame packet
 				end
