@@ -98,10 +98,9 @@ module pid_decode(
 	       //call data_crc16_fifo
 	    end
 	 else begin
-	   
-	       
-	      
-	      
-      end
+	    //call non_data fifo
+	 end
+	 end // if (packet_type = 2'b01)
+      end // if (w_enable)
    end // always_comb
 endmodule // pid_decode
