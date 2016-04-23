@@ -103,3 +103,57 @@ vlog source/USB_Reciever/pid_decode.sv
 # 	pid_decode
 # End time: 18:08:41 on Apr 23,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
+vlog source/USB_Reciever/usb_receiver.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:23:15 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/usb_receiver.sv 
+# -- Compiling module usb_receiver
+# ** Error: source/USB_Reciever/usb_receiver.sv(125): 'fifo' already declared in this scope.
+# ** Error: source/USB_Reciever/usb_receiver.sv(136): 'fifo' already declared in this scope.
+# ** Error: source/USB_Reciever/usb_receiver.sv(147): 'fifo' already declared in this scope.
+# End time: 18:23:15 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/usb_receiver.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:23:44 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/usb_receiver.sv 
+# -- Compiling module usb_receiver
+# 
+# Top level modules:
+# 	usb_receiver
+# End time: 18:23:44 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+vlog source/USB_Reciever/flex_fifo.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:43:00 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/flex_fifo.sv 
+# ** Error: (vlog-19) Failed to access library './work' at "./work".
+# No such file or directory. (errno = ENOENT)
+# ** Error: Library work not found.
+# ** Error: Verilog Compiler exiting
+# End time: 18:43:00 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 3, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/USB_Reciever/flex_fifo.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 18:43:27 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/flex_fifo.sv 
+# -- Compiling module flex_fifo
+# ** Warning: source/USB_Reciever/flex_fifo.sv(47): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# ** Warning: source/USB_Reciever/flex_fifo.sv(49): (vlog-2583) [SVCHK] - Some checking for conflicts with always_comb and always_latch variables not yet supported. Run vopt to provide additional design-level checks.
+# 
+# Top level modules:
+# 	flex_fifo
+# End time: 18:43:27 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 2
+vlog source/USB_Reciever/usb_receiver.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 19:43:11 on Apr 23,2016
+# vlog -reportprogress 300 source/USB_Reciever/usb_receiver.sv 
+# -- Compiling module usb_receiver
+# 
+# Top level modules:
+# 	usb_receiver
+# End time: 19:43:11 on Apr 23,2016, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

@@ -12,7 +12,7 @@ module data_fifo (
 		  input wire 	   r_enable,
 		  input wire 	   w_enable,
 		  input wire [7:0] w_data,
-		  input wire [7:0] r_data,
+		  output wire [7:0] r_data,
 		  output wire 	   empty,
 		  output wire 	   full
 		  );

@@ -11,8 +11,14 @@ module usb_receiver(
 		    input wire 	      n_rst,
 		    input wire 	      d_plus,
 		    input wire 	      d_minus,
-		    input wire 	      r_enable,
+		    input wire 	      rdata_enable,
+		    input wire 	      rnd_enable,
+		    input wire 	      rpid_enable,
+		    input wire 	      rdcrc_enable,
 		    output reg [7:0] r_data,
+		    output reg [7:0] r_nd,
+		    output reg [7:0] r_pid,
+		    output reg [7:0] r_dcrc,
 		    output wire       data_empty,
 		    output wire       data_full,
 		    output wire       pad_empty,
@@ -105,7 +111,7 @@ module usb_receiver(
    data_fifo data( //data fifo
 		.clk(clk),
 		.n_rst(n_rst),
-		.r_enable(r_enable),
+		.r_enable(rdata_enable),
 		.w_enable(enable_data),
 		.w_data(rcv_data),
 		.r_data(r_data),
@@ -116,21 +122,21 @@ module usb_receiver(
    dcrc_fifo padding( //CRC data padding fifo
 		.clk(clk),
 		.n_rst(n_rst),
-		.r_enable(r_enable),
+		.r_enable(rdcrc_enable),
 		.w_enable(enable_pad),
 		.w_data(rcv_data),
-		.r_data(r_data),
+		.r_data(r_dcrc),
 		.empty(pad_empty),
 		.full(pad_full)
 		);
 
-   do_fifo pid( //PID fifo
+   pid_fifo pid( //PID fifo
 		.clk(clk),
 		.n_rst(n_rst),
-		.r_enable(r_enable),
+		.r_enable(rpid_enable),
 		.w_enable(enable_pid),
 		.w_data(rcv_data),
-		.r_data(r_data),
+		.r_data(r_pid),
 		.empty(pid_empty),
 		.full(pid_full)
 		);
@@ -138,10 +144,10 @@ module usb_receiver(
    nd_fifo nondata( //non-data fifo
 		.clk(clk),
 		.n_rst(n_rst),
-		.r_enable(r_enable),
+		.r_enable(rnd_enable),
 		.w_enable(enable_nondata),
 		.w_data(rcv_data),
-		.r_data(r_data),
+		.r_data(r_nd),
 		.empty(nondata_empty),
 		.full(nondata_full)
 		);

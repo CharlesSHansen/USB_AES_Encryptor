@@ -102,7 +102,7 @@ module usb_receiver(
 		.enable_nondata(enable_nondata)
 	     );
 
-   data_fifo fifo( //data fifo
+   data_fifo data( //data fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(r_enable),
@@ -113,7 +113,7 @@ module usb_receiver(
 		.full(data_full)
 		);
 
-   dcrc_fifo fifo( //CRC data padding fifo
+   dcrc_fifo padding( //CRC data padding fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(r_enable),
@@ -124,7 +124,7 @@ module usb_receiver(
 		.full(pad_full)
 		);
 
-   do_fifo fifo( //PID fifo
+   do_fifo pid( //PID fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(r_enable),
@@ -135,7 +135,7 @@ module usb_receiver(
 		.full(pid_full)
 		);
 
-   nd_fifo fifo( //non-data fifo
+   nd_fifo nondata( //non-data fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(r_enable),
