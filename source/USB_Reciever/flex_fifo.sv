@@ -16,15 +16,15 @@ module flex_fifo
     input wire 		      w_enable,
     input wire [NUMBITS-1:0]  w_data,
     output wire [NUMBITS-1:0] r_data,
-    output wire 	      empty,
-    output wire 	      full
+    output reg 		      empty,
+    output reg 		      full
     );
    
    reg [STACKSIZE-1:0][NUMBITS-1:0] memory;
    reg [STACKSIZE-1:0][NUMBITS-1:0] nxt_memory;
    reg [STACKCNT-1:0] 		    write_point;
    reg [STACKCNT-1:0] 		    read_point;
-   reg 				    not_used;
+   reg 				    not_used, not_used2;
 
    genvar 			    index;
    
@@ -36,23 +36,23 @@ module flex_fifo
 	 memory <= nxt_memory;
       end
    end
-      
-   flex_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used));
-   flex_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used));
+   
+   flex_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), .rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used2));
+   flex_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(STACKSIZE-1), .count_out(write_point), .rollover_flag(not_used2));
 
    generate
       for(index = 0; index < STACKSIZE; index = index + 1) begin
 	 always_comb begin
-	    if(write_point == index && w_enable && full = 1'b0)
+	    if(write_point == index && w_enable && full == 0)
 	      nxt_memory[index] = w_data;
 	    else
 	      nxt_memory[index] = memory[index];
 	 end
       end
    endgenerate
-      
+   
    always_comb begin
-      if(write_point == r_point) 
+      if(write_point == read_point) 
 	empty = 1;
       else
 	empty = 0;
@@ -64,5 +64,5 @@ module flex_fifo
    end // always_comb
    
    assign r_data = memory[read_point];
-      
+   
 endmodule // flex_fifo
