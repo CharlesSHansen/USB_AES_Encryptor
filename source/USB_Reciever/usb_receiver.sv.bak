@@ -13,8 +13,14 @@ module usb_receiver(
 		    input wire 	      d_minus,
 		    input wire 	      r_enable,
 		    output reg [7:0] r_data,
-		    output wire       empty,
-		    output wire       full,
+		    output wire       data_empty,
+		    output wire       data_full,
+		    output wire       pad_empty,
+		    output wire       pad_full,
+		    output wire       pid_empty,
+		    output wire       pid_full,
+		    output wire       nondata_empty,
+		    output wire       nondata_full,
 		    output wire       rcving,
 		    output wire       r_error		    
 		    );
@@ -26,35 +32,39 @@ module usb_receiver(
    reg 				      d_edge;
    reg 				      byte_recieved;
    reg [7:0] 			      rcv_data;
-   
-   //fine
+   reg				      enable_pad;
+   reg				      enable_data;
+   reg				      enable_pid;
+   reg				      enable_nondata;
+
+
    sync_high shi(
 		 .clk(clk),
 		 .n_rst(n_rst),
 		 .async_in(d_plus),
 		 .sync_out(d_plus_sync)
 		 );
-   //fine
+
    sync_low slo(
 		.clk(clk),
 		.n_rst(n_rst),
 		.async_in(d_minus),
 		.sync_out(d_minus_sync)
 		);
-   //fine   
+
    eop_detect reop(
 	       .d_plus(d_plus_sync),
 	       .d_minus(d_minus_sync),
 	       .eop(eop)
 	       );
-   //fine
+
    edge_detect edetect(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .d_plus(d_plus_sync),
 		       .d_edge(d_edge)
 		       );
-   //fine   
+
    decode dec(
 	      .clk(clk),
 	      .n_rst(n_rst),
@@ -63,7 +73,7 @@ module usb_receiver(
 	      .eop(eop),
 	      .d_orig(d_orig)
 	      );
-   //edit
+   //edit?
    timer tim(
 	     .clk(clk),
 	     .n_rst(n_rst),
@@ -72,7 +82,7 @@ module usb_receiver(
 	     .shift_enable(shift_enable),
 	     .byte_recieved(byte_recieved)
 	     );
-   //fine
+
    shift_register sr(
 		     .clk(clk),
 		     .n_rst(n_rst),
@@ -81,23 +91,61 @@ module usb_receiver(
 		     .rcv_data(rcv_data)
 		     );
 
-   //add do_fifo(), nd_fifo(), dcrc_fifo(), data_fifo() 
+   pid_decode(
+		.clk(clk),
+		.n_rst(n_rst),
+		.w_enable(w_enable),
+		.rcv_data(rcv_data),
+		.enable_pad(enable_pad),
+		.enable_data(enable_data),
+		.enable_pid(enable_pid),
+		.enable_nondata(enable_nondata)
+	     );
 
-   //add pid_decode()
-
-   //remove 
-   rx_fifo fifo(
+   data_fifo fifo( //data fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(r_enable),
-		.w_enable(w_enable),
+		.w_enable(enable_data),
 		.w_data(rcv_data),
 		.r_data(r_data),
-		.empty(empty),
-		.full(full)
+		.empty(data_empty),
+		.full(data_full)
 		);
 
-   //wiring should be to pid_decode
+   dcrc_fifo fifo( //CRC data padding fifo
+		.clk(clk),
+		.n_rst(n_rst),
+		.r_enable(r_enable),
+		.w_enable(enable_pad),
+		.w_data(rcv_data),
+		.r_data(r_data),
+		.empty(pad_empty),
+		.full(pad_full)
+		);
+
+   do_fifo fifo( //PID fifo
+		.clk(clk),
+		.n_rst(n_rst),
+		.r_enable(r_enable),
+		.w_enable(enable_pid),
+		.w_data(rcv_data),
+		.r_data(r_data),
+		.empty(pid_empty),
+		.full(pid_full)
+		);
+
+   nd_fifo fifo( //non-data fifo
+		.clk(clk),
+		.n_rst(n_rst),
+		.r_enable(r_enable),
+		.w_enable(enable_nondata),
+		.w_data(rcv_data),
+		.r_data(r_data),
+		.empty(nondata_empty),
+		.full(nondata_full)
+		);
+
    rcu control(
 	       .clk(clk),
 	       .n_rst(n_rst),

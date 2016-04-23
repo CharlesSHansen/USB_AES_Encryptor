@@ -1,12 +1,12 @@
 // $Id: $
-// File name:   data_fifo.sv
+// File name:   do_fifo.sv
 // Created:     4/23/2016
 // Author:      Charles Hansen
 // Lab Section: 337-04
 // Version:     1.0  Initial Design Entry
-// Description: Buffer to store data bits for encryption
+// Description: Fifo holding the order that packets are recieved in
 
-module data_fifo (
+module do_fifo (
 		  input wire 	   clk,
 		  input wire 	   n_rst,
 		  input wire 	   r_enable,
@@ -17,7 +17,7 @@ module data_fifo (
 		  output wire 	   full
 		  );
 
-   flex_fifo #(8,16,6) CALL(
+   flex_fifo #(4,79,8) CALL(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .r_enable(r_enable),
@@ -28,4 +28,3 @@ module data_fifo (
 		       .full(full)
 		       );
 endmodule // data_fifo
-
