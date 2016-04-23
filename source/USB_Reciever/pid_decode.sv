@@ -32,22 +32,22 @@ module pid_decode(
    reg [1:0] 			    packet_type;
    
    //Token Packets
-   wire [3:0] 			    token1 = 4'b0001;
-   wire [3:0] 			    token2 = 4'b1001;
-   wire [3:0] 			    token3 = 4'b0101;
-   wire [3:0] 			    token4 = 4'b1101;
+   localparam [3:0] 			    token1 = 4'b0001;
+   localparam [3:0] 			    token2 = 4'b1001;
+   localparam [3:0] 			    token3 = 4'b0101;
+   localparam [3:0] 			    token4 = 4'b1101;
 
    //Data Packets
-   wire [3:0] 			    data1 = 4'b0011;
-   wire [3:0] 			    data2 = 4'b1011;
-   wire [3:0] 			    data3 = 4'b0111;
-   wire [3:0] 			    data4 = 4'b1111;
+   localparam [3:0] 			    data1 = 4'b0011;
+   localparam [3:0] 			    data2 = 4'b1011;
+   localparam [3:0] 			    data3 = 4'b0111;
+   localparam [3:0] 			    data4 = 4'b1111;
 
    //Handshake Packets
-   wire [3:0] 			    hand1 = 4'b0010;
-   wire [3:0] 			    hand2 = 4'b1010;
-   wire [3:0] 			    hand3 = 4'b1110;
-   wire [3:0] 			    hand4 = 4'b0110;
+   localparam [3:0] 			    hand1 = 4'b0010;
+   localparam [3:0] 			    hand2 = 4'b1010;
+   localparam [3:0] 			    hand3 = 4'b1110;
+   localparam [3:0] 			    hand4 = 4'b0110;
 
    /*   Start of Frame Packet, dealt with in else statement.  Declarations are for sanity
     wire [3:0] 			    spec1 = 4'b1100;
