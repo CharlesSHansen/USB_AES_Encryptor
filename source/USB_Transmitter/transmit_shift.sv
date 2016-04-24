@@ -9,12 +9,17 @@
 module transmit_shift(
 		      input wire clk,
 		      input wire n_rst,
-		      input wire shift_enable,
 		      input wire load_enable,
 		      input wire [7:0] data,
 		      output wire data_out		      
 		      );
 
+   reg 				  shift_enable;
+
+   always_ff @ (posedge clk, negedge n_rst) begin
+      shift_enable_delay <= load_enable;
+   end
+   
    flex_pts_sr #(8,0) call((
 		    .clk(clk),
 		    .n_rst(n_rst),

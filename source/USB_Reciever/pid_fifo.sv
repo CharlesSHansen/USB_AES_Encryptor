@@ -17,7 +17,7 @@ module pid_fifo (
 		  output wire 	   full
 		  );
 
-   flex_fifo #(4,79,8) CALL(
+   flex_fifo #(8,79,8) CALL(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .r_enable(r_enable),

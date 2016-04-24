@@ -1,5 +1,5 @@
 // $Id: $
-// File name:   RCU_Transmit.sv
+// File name:   trcu.sv
 // Created:     4/23/2016
 // Author:      Charles Hansen
 // Lab Section: 337-04
@@ -7,7 +7,7 @@
 // Description: RCU for Pulling Data from FIFOs and Transmitting them
 
 
-module RCU_Transmit(
+module trcu(
 		    input wire 	     clk,
 		    input wire 	     n_rst,
 		    input wire 	     encrypt_full,
