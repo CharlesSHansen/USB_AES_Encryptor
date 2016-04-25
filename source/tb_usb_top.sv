@@ -10,6 +10,8 @@
 
 module tb_usb_top();
 
+reg tb_n_rst, tb_d_plus_in, tb_d_minus_in, tb_in_pwr, tb_in_gnd, tb_d_plus_out, tb_d_minus_out, tb_out_pwr, tb_out_gnd;
+
 // BEGIN CLK GEN
 reg tb_clk;
 localparam CLK_PERIOD = 10;
@@ -21,6 +23,8 @@ always begin : CLK_GEN
 end
 // END CLK GEN 
 
+usb_top DUT(.clk(tb_clk), .n_rst(tb_n_rst), .d_plus_in(tb_d_plus_in), .d_minus_in(tb_d_minus_in), .in_pwr(tb_in_pwr), .in_gnd(tb_in_gnd), .d_plus_out(tb_d_plus_out), .d_minus_out(tb_d_minus_out), .out_pwr(tb_out_pwr), .out_gnd(tb_out_gnd));
+
 // BEGIN FILE I/O
 integer data_file;
 integer scan_file;
@@ -30,7 +34,7 @@ logic signed [7:0] captured_data; //one character at a time
 initial begin
 	data_file = $fopen("./source/usb_data.dat", "r");
 	if (data_file == `NULL) begin
-		$display("data_file handle was NULL");
+		$display("ERROR: Couldn't open input data file.");
 		$finish;
 	end
 end
