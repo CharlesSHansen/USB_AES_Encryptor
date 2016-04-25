@@ -17,7 +17,7 @@ module data_fifo(
 		  output wire 	   full
 		  );
 
-   flex_fifo #(8,16,6) CALL(
+   flex_fifo #(8,16,4) CALL(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .r_enable(r_enable),
