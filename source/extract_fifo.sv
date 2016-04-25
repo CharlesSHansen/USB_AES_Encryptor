@@ -21,7 +21,7 @@ module extract_fifo(
 
  
 
-    typedef enum 			bit [4:0] {IDLE, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, SIXTEEN, READ} stateType;
+    typedef enum 			bit [4:0] {IDLE, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, SIXTEEN, WAIT, READ} stateType;
     stateType state;
     stateType nstate;
 
@@ -114,9 +114,12 @@ module extract_fifo(
 	end
 	SIXTEEN : begin
 	   tmp[127:120] = data;
-	   nstate = IDLE;
+	   nstate = WAIT;
 	   rdy = 1;
 	   pop = 0;
+	end
+	WAIT : begin
+	   nstate = IDLE;
 	end
       endcase // case (state)
    end // always_comb
