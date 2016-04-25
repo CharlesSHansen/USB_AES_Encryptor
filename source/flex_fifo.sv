@@ -8,7 +8,7 @@
 
 
 module flex_fifo
-  #(parameter NUMBITS = 8, parameter STACKSIZE = 64, parameter STACKCNT = 7)
+  #(parameter NUMBITS = 8, parameter STACKSIZE = 64, parameter STACKCNT = 6)
    (
     input wire 		      clk,
     input wire 		      n_rst,
@@ -32,7 +32,6 @@ module flex_fifo
    
    genvar 			    index;
    
-   
    always_ff @ (posedge clk, negedge n_rst) begin
       if(n_rst == 1'b0) begin
 	 memory <= 0;
@@ -41,8 +40,8 @@ module flex_fifo
       end
    end
    
-   flex_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), .rollover_val(count_to[STACKCNT-1:0]), .count_out(write_point), .rollover_flag(w_not_used));
-   flex_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(count_to[STACKCNT-1:0]), .count_out(read_point), .rollover_flag(w_not_used));
+   flex_full_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), .rollover_val(count_to[STACKCNT-1:0]+1'b1), .count_out(write_point), .rollover_flag(w_not_used));
+   flex_full_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(count_to[STACKCNT-1:0]+1'b1), .count_out(read_point), .rollover_flag(w_not_used));
 
    generate
       for(index = 0; index < STACKSIZE; index = index + 1) begin
@@ -61,7 +60,7 @@ module flex_fifo
       else
 	empty = 0;
       
-      if((write_point + 1) % STACKSIZE == read_point)
+      if((write_point) % STACKSIZE == read_point - 1)
 	full = 1;
       else
 	full = 0;
