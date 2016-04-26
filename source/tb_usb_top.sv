@@ -28,7 +28,7 @@ usb_top DUT(.clk(tb_clk), .n_rst(tb_n_rst), .d_plus_in(tb_d_plus_in), .d_minus_i
 // BEGIN FILE I/O
 integer data_file;
 integer scan_file;
-logic signed [7:0] captured_data; //one character at a time
+logic unsigned [7:0] captured_data; //one character at a time
 `define NULL 0
 
 initial begin

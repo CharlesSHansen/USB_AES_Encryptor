@@ -120,11 +120,11 @@ module usb_top(
 		  .data_read(r_data),
 		  .write(shift_write),
 		  .write_enable(enable_write),
-		  .nd_enable(enable_nd),
+		  .nd_enable(rnd_enable),
 		  .eop_enable(enable_eop),
-		  .pid_enable(enable_pid),
-		  .dcrc_enable(enable_pad),
-		  .data_enable(enable_data)
+		  .pid_enable(rpid_enable),
+		  .dcrc_enable(rpad_enable),
+		  .data_enable(rdata_enable)
 		  );
    
    transmit_shift WRITE_SHIFT(
@@ -138,7 +138,8 @@ module usb_top(
    transmit DATA_OUT(
 		     .clk(clk),
 		     .n_rst(n_rst),
-		     .eop(eop_enable),
+		     .eop(enable_eop),
+		     .data(transmit_out),
 		     .d_plus(d_plus_out),
 		     .d_minus(d_minus_out)
 		     );
