@@ -44,7 +44,7 @@ module tb_trcu();
       pid_empty = 0;
       data_empty = 0;
       nd_read = '1;
-      dcrc_read = '1;
+      dcrc_read = 8'b10110100;
       data_read = '1;
       pid_read = 8'b00111100;
       #1;@(negedge clk);
