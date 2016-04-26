@@ -15,20 +15,22 @@ def usb_data():
     handshake_size = 8 # 8-PID, -> eop
     sof_size = 24 # 8-PID, 11-frame name, 5-CRC -> eop
 
-    with open("./usb_data.dat", "w") as usb_file:
+    with open("./usb_data.dat", "wb") as usb_file:
         with open(sys.argv[1], "r") as data_file:
             for line in data_file:
                 for character in line:
                     #for every byte of data write the following... 
                     # -> sync, a random data PID, the data byte, and 2 CRC bytes
-                    binary_data_packet = [sync, data_pids[randint(0,3)], crc, crc]
-                    character_data_packet = [text_from_bits(item) for item in binary_data_packet]
-                    data_packet = character_data_packet[:2]+list(character)+character_data_packet[2:]
-                    #print(data_packet)
-                    print(int2bytes(ord(character)))
-                    for item in data_packet:
+                    first_half = [sync, data_pids[randint(0,3)]]
+                    second_half = [crc, crc]
+                    first_int = [int(item, 2) for item in first_half]
+                    second_int = [int(item, 2) for item in second_half]
+                    integer_data_packet = first_int
+                    integer_data_packet.append(ord(character))
+                    integer_data_packet += second_int
+                    byte_data_packet = [int2bytes(item) for item in integer_data_packet]
+                    for item in byte_data_packet:
                         usb_file.write(item)
-                    
     return
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
