@@ -8,331 +8,196 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-vlib work
-# ** Warning: (vlib-34) Library already exists at "work".
-vlog source/sBox.sv
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:42:08 on Apr 24,2016
-# vlog -reportprogress 300 source/sBox.sv 
-# ** Error: (vlog-7) Failed to open design unit file "source/sBox.sv" in read mode.
-# No such file or directory. (errno = ENOENT)
-# End time: 20:42:08 on Apr 24,2016, Elapsed time: 0:00:00
+# Start time: 21:45:59 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# ** Error: source/AES_Encryptor/mixColumns.sv(9): near "input": syntax error, unexpected input, expecting class
+# End time: 21:46:00 on Apr 25,2016, Elapsed time: 0:00:01
 # Errors: 1, Warnings: 0
 # /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-
-vlog source/AES_Encryptor/sBox.sv
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:43:57 on Apr 24,2016
-# vlog -reportprogress 300 source/AES_Encryptor/sBox.sv 
-# -- Compiling module sBox
-# ** Error: source/AES_Encryptor/sBox.sv(9): near ";": syntax error, unexpected ';', expecting ')'
-# End time: 20:43:58 on Apr 24,2016, Elapsed time: 0:00:01
+# Start time: 21:46:16 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# ** Error: source/AES_Encryptor/mixColumns.sv(9): near "input": syntax error, unexpected input, expecting class
+# End time: 21:46:16 on Apr 25,2016, Elapsed time: 0:00:00
 # Errors: 1, Warnings: 0
 # /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-vlog source/AES_Encryptor/sBox.sv
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:44:13 on Apr 24,2016
-# vlog -reportprogress 300 source/AES_Encryptor/sBox.sv 
-# -- Compiling module sBox
-# ** Error: source/AES_Encryptor/sBox.sv(16): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(17): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(18): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(19): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(20): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(21): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(22): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(23): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(24): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(25): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(26): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(27): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(28): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(29): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(30): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(31): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(32): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(33): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(34): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(35): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(36): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(37): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(38): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(39): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(40): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(41): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(42): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(43): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(44): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(45): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(46): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(47): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(48): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(49): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(50): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(51): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(52): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(53): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(54): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(55): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(56): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(57): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(58): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(59): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(60): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(61): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(62): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(63): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(64): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(65): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(66): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(67): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(68): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(69): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(70): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(71): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(72): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(73): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(74): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(75): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(76): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(77): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(78): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(79): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(80): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(81): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(82): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(83): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(84): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(85): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(86): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(87): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(88): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(89): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(90): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(91): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(92): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(93): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(94): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(95): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(96): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(97): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(98): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(99): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(100): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(101): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(102): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(103): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(104): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(105): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(106): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(107): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(108): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(109): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(110): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(111): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(112): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(113): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(114): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(115): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(116): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(117): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(118): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(119): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(120): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(121): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(122): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(123): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(124): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(125): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(126): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(127): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(128): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(129): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(130): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(131): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(132): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(133): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(134): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(135): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(136): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(137): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(138): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(139): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(140): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(141): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(142): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(143): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(144): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(145): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(146): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(147): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(148): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(149): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(150): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(151): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(152): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(153): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(154): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(155): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(156): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(157): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(158): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(159): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(160): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(161): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(162): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(163): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(164): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(165): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(166): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(167): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(168): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(169): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(170): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(171): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(172): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(173): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(174): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(175): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(176): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(177): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(178): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(179): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(180): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(181): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(182): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(183): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(184): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(185): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(186): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(187): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(188): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(189): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(190): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(191): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(192): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(193): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(194): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(195): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(196): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(197): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(198): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(199): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(200): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(201): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(202): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(203): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(204): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(205): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(206): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(207): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(208): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(209): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(210): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(211): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(212): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(213): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(214): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(215): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(216): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(217): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(218): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(219): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(220): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(221): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(222): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(223): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(224): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(225): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(226): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(227): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(228): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(229): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(230): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(231): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(232): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(233): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(234): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(235): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(236): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(237): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(238): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(239): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(240): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(241): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(242): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(243): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(244): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(245): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(246): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(247): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(248): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(249): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(250): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(251): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(252): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(253): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(254): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(255): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(256): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(257): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(258): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(259): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(260): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(261): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(262): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(263): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(264): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(265): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(266): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(267): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(268): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(269): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(270): (vlog-2110) Illegal reference to net "outData".
-# ** Error: source/AES_Encryptor/sBox.sv(271): (vlog-2110) Illegal reference to net "outData".
-# End time: 20:44:13 on Apr 24,2016, Elapsed time: 0:00:00
-# Errors: 256, Warnings: 0
+# Start time: 21:46:33 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(19): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
+# End time: 21:46:33 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
 # /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-vlog source/AES_Encryptor/sBox.sv
+clear
+# [H[2J
+clear
+# [H[2J
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:45:03 on Apr 24,2016
-# vlog -reportprogress 300 source/AES_Encryptor/sBox.sv 
-# -- Compiling module sBox
+# Start time: 22:24:13 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(14): near "logic": syntax error, unexpected logic, expecting ';' or ','
+# ** Error: source/AES_Encryptor/mixColumns.sv(23): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
+# End time: 22:24:13 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:24:26 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(23): near "=": syntax error, unexpected '=', expecting IDENTIFIER or TYPE_IDENTIFIER
+# End time: 22:24:26 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:25:44 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(29): near "}": syntax error, unexpected '}'
+# End time: 22:25:45 on Apr 25,2016, Elapsed time: 0:00:01
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:25:58 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
 # 
 # Top level modules:
-# 	sBox
-# End time: 20:45:03 on Apr 24,2016, Elapsed time: 0:00:00
+# 	mixColumns
+# End time: 22:25:58 on Apr 25,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-vlog source/AES_Encryptor/subBytes.sv
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:45:57 on Apr 24,2016
-# vlog -reportprogress 300 source/AES_Encryptor/subBytes.sv 
-# -- Compiling module subBytes
-# ** Error: source/AES_Encryptor/subBytes.sv(13): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(14): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(15): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(16): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(17): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(18): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(19): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(20): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(21): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(22): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(23): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(24): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(25): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(26): 'sBox1' already declared in this scope.
-# ** Error: source/AES_Encryptor/subBytes.sv(27): 'sBox1' already declared in this scope.
-# End time: 20:45:57 on Apr 24,2016, Elapsed time: 0:00:00
-# Errors: 15, Warnings: 0
+# Start time: 22:31:13 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(87): (vlog-2730) Undefined variable: 'temp'.
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): near "endmodule": syntax error, unexpected endmodule, expecting ';' or ','
+# End time: 22:31:13 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 2, Warnings: 0
 # /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
-vlog source/AES_Encryptor/subBytes.sv
+vlog source/AES_Encryptor/mixColumns.sv
 # QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-# Start time: 20:47:27 on Apr 24,2016
-# vlog -reportprogress 300 source/AES_Encryptor/subBytes.sv 
-# -- Compiling module subBytes
+# Start time: 22:31:25 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): near "endmodule": syntax error, unexpected endmodule, expecting ';' or ','
+# End time: 22:31:25 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:31:31 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(40): 'S0x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(24).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(41): 'S1x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(25).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(42): 'S2x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(26).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(43): 'S3x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(27).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(45): 'S0x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(29).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(46): 'S1x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(30).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(47): 'S2x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(31).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(48): 'S3x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(32).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(56): 'S0x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(24).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(57): 'S1x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(25).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(58): 'S2x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(26).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(59): 'S3x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(27).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(61): 'S0x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(29).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(62): 'S1x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(30).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(63): 'S2x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(31).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(64): 'S3x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(32).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(72): 'S0x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(24).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(73): 'S1x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(25).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(74): 'S2x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(26).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(75): 'S3x2' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(27).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(77): 'S0x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(29).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(78): 'S1x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(30).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(79): 'S2x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(31).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(80): 'S3x3' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(32).
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(87): 'outData[0:127]' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(21).
+# End time: 22:31:31 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 25, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:35:02 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(14): (vlog-2244) Variable 'input1' is implicitly static. You must either explicitly declare it as static or automatic
+# or remove the initialization in the declaration of variable.
+# ** Error: source/AES_Encryptor/mixColumns.sv(15): (vlog-2244) Variable 'input2' is implicitly static. You must either explicitly declare it as static or automatic
+# or remove the initialization in the declaration of variable.
+# ** Error: source/AES_Encryptor/mixColumns.sv(16): (vlog-2244) Variable 'input3' is implicitly static. You must either explicitly declare it as static or automatic
+# or remove the initialization in the declaration of variable.
+# ** Error: source/AES_Encryptor/mixColumns.sv(17): (vlog-2244) Variable 'input4' is implicitly static. You must either explicitly declare it as static or automatic
+# or remove the initialization in the declaration of variable.
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): (vlog-2730) Undefined variable: 'temp1'.
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): (vlog-2730) Undefined variable: 'temp2'.
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): (vlog-2730) Undefined variable: 'temp3'.
+# ** Error: source/AES_Encryptor/mixColumns.sv(89): (vlog-2730) Undefined variable: 'temp4'.
+# End time: 22:35:02 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 8, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:35:24 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: source/AES_Encryptor/mixColumns.sv(36): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(37): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(38): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(39): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(52): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(53): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(54): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(55): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(68): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(69): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(70): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(71): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(84): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(85): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(86): Illegal left-hand side in procedural cont. assignment.
+# ** Error: source/AES_Encryptor/mixColumns.sv(87): Illegal left-hand side in procedural cont. assignment.
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(90): 'outData[0:127]' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(21).
+# End time: 22:35:24 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 17, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:37:35 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# ** Error: (vlog-7045) source/AES_Encryptor/mixColumns.sv(90): 'outData[0:127]' is driven by more than one continuous assignment. See source/AES_Encryptor/mixColumns.sv(21).
+# End time: 22:37:35 on Apr 25,2016, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# /package/eda/mg/questa10.3b/questasim/linux_x86_64/vlog failed.
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:37:53 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
 # 
 # Top level modules:
-# 	subBytes
-# End time: 20:47:27 on Apr 24,2016, Elapsed time: 0:00:00
+# 	mixColumns
+# End time: 22:37:54 on Apr 25,2016, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+vlog source/AES_Encryptor/mixColumns.sv
+# QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
+# Start time: 22:53:31 on Apr 25,2016
+# vlog -reportprogress 300 source/AES_Encryptor/mixColumns.sv 
+# -- Compiling module mixColumns
+# 
+# Top level modules:
+# 	mixColumns
+# End time: 22:53:31 on Apr 25,2016, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
