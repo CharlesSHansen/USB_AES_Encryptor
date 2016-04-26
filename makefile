@@ -16,7 +16,7 @@ include /home/ecegrid/a/ece337/Course_Prod/course_make_vars
 # (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
-COMPONENT_FILES	:= sync_high.sv sync_low.sv eop_detect.sv edge_detect.sv decode.sv timer.sv shift_register.sv pid_decode.sv rcu.sv trcu.sv transmit_shift.sv transmit.sv pid_fifo.sv nd_fifo.sv dcrc_fifo.sv data_fifo.sv flex_counter.sv flex_fifo.sv flex_pts_sr.sv flex_stp_sr.sv
+COMPONENT_FILES	:= sync_high.sv sync_low.sv eop_detect.sv edge_detect.sv decode.sv timer.sv shift_register.sv pid_decode.sv rcu.sv trcu.sv transmit_shift.sv transmit.sv pid_fifo.sv nd_fifo.sv dcrc_fifo.sv data_fifo.sv flex_counter.sv flex_fifo.sv flex_pts_sr.sv flex_stp_sr.sv flex_full_counter.sv
 
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS

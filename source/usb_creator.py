@@ -24,9 +24,10 @@ def usb_data():
                     binary_data_packet = [sync, data_pids[randint(0,3)], crc, crc]
                     character_data_packet = [text_from_bits(item) for item in binary_data_packet]
                     data_packet = character_data_packet[:2]+list(character)+character_data_packet[2:]
-                    print(data_packet)
-                    #for item in data_packet:
-                        #usb_file.write(item)
+                    #print(data_packet)
+                    print(int2bytes(ord(character)))
+                    for item in data_packet:
+                        usb_file.write(item)
                     
     return
 
