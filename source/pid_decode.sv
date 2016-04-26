@@ -54,7 +54,7 @@ module pid_decode(
    localparam [3:0] 			    spec3 = 4'b1000;
    localparam [3:0] 			    spec4 = 4'b0100;
 
-   typedef enum 	    bit [1:0] {IDLE, NON_DATA, DATA, CRC} stateType;
+   typedef enum 	    bit [2:0] {IDLE, WAIT_IDLE, NON_DATA, WAIT_NON_DATA, DATA, WAIT_DATA, CRC, WAIT_CRC} stateType;
    stateType state;
    stateType next_state;
 
@@ -74,6 +74,12 @@ always_comb begin
 	next_state = state;
 
 	case(state)
+	
+	WAIT_IDLE:
+	begin
+		next_state = IDLE;
+	end
+	
 	IDLE:
 	begin
 		packet_counter = 0;
@@ -82,22 +88,31 @@ always_comb begin
 			enable_pid = 1; //write PID to the pid_fifo from w_data
 			//decide what type of packet was just received
 			if ((rcv_data[7:4] == data1) || (rcv_data[7:4] == data2) || (rcv_data[7:4] == data3) || (rcv_data[7:4] == data4))
-				next_state = DATA;
-			else
-				next_state = NON_DATA;
+			begin
+				next_state = WAIT_DATA;
+			end else begin
+				next_state = WAIT_NON_DATA;
 				if((rcv_data[7:4] == token1) || (rcv_data[7:4] == token2) || (rcv_data[7:4] == token3) || (rcv_data[7:4] == token4))
 				begin
 					packet_counter = 2; // 2 bytes of token packet 
 				end else if((rcv_data[7:4] == hand1) || (rcv_data[7:4] == hand2) || (rcv_data[7:4] == hand3) || (rcv_data[7:4] == hand4))
 				begin
-					next_state = IDLE; // only pid in handshake
+					next_state = WAIT_IDLE; // only pid in handshake
 				end else if((rcv_data[7:4] == spec1) || (rcv_data[7:4] == spec2) || (rcv_data[7:4] == spec3) || (rcv_data[7:4] == spec4))
 				begin
 					packet_counter = 2; // 2 bytes of start of frame packet
+				end else begin
+					next_state = WAIT_IDLE;
 				end
+			end
 		end
 		else
 			next_state = IDLE;
+	end
+	
+	WAIT_NON_DATA:
+	begin
+		next_state = NON_DATA;
 	end
 
 	NON_DATA:
@@ -105,11 +120,17 @@ always_comb begin
 		next_state = NON_DATA;
 		if (w_enable == 1)
 		begin
+			next_state = WAIT_NON_DATA;
 			enable_nondata = 1;
-			packet_counter = packet_counter - 1;			
+			packet_counter = packet_counter - 1;
 		end
 		if (packet_counter == 0)
-			next_state = IDLE;
+			next_state = WAIT_IDLE;
+	end
+
+	WAIT_DATA:
+	begin
+		next_state = DATA;
 	end
 
 	DATA:
@@ -118,22 +139,28 @@ always_comb begin
 		begin
 			enable_data = 1;
 			packet_counter = 2; //2 bytes of padding after data packet
-			next_state = CRC;
+			next_state = WAIT_CRC;
 		end else begin
 			next_state = DATA;
 		end
 	end
 
+	WAIT_CRC:
+	begin
+		next_state = CRC;
+	end
+	
 	CRC:
 	begin
 		next_state = CRC;
 		if (w_enable == 1)
 		begin
+			next_state = WAIT_CRC;
 			enable_pad = 1;
-			packet_counter = packet_counter - 1;			
+			packet_counter = packet_counter - 1;
 		end
 		if (packet_counter == 0)
-			next_state = IDLE;
+			next_state = WAIT_IDLE;
 	end
 	endcase
 end //end next-state logic
