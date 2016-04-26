@@ -72,13 +72,18 @@ module trcu(
       dcrc_enable = 0;
       data_enable = 0;
       write_enable = 0;
+      pid_remaining = pid_remaining;
+      wait_remaining = wait_remaining;
+      data = data;
+      eop_enable = eop_enable;
+      write = write;
       
       begin : RCU_TRANSMIT
 	 case(state)
 	   IDLE : begin
 	      non_data = 0;
 	      eop_enable = 1;
-	      data = 0;
+	      data = '0;
 	      pid_remaining = 0;
 	      wait_remaining = 0;
 	      if(encrypt_full == 1)
