@@ -12,25 +12,43 @@ module transmit(
 		input wire  n_rst,
 		input wire  eop,
 		input wire  data,
-		output wire d_plus,
-		output wire d_minus
+		input wire  ready,
+		output reg d_plus,
+		output reg d_minus
 		);
 
-   reg 			    previous;
-   reg 			    data_out;
+   reg 			    previous = 1;
    
    always_ff @ (posedge clk, negedge n_rst) begin
       if(n_rst == 1'b0) begin
 	 previous <= 1;
-	 data_out <= 1;
       end
       else begin
-	 previous <= data;
-	 data_out <= previous;
+	 previous = d_plus;
+	 if(ready == 1) begin
+	    if(data == 0) begin
+	       d_plus = previous;
+	       d_minus = ~previous;
+	    end else begin
+	       d_plus = ~previous;
+	       d_minus = previous;
+	    end
+	 end
+	 else begin
+	    d_plus = 1;
+	    d_minus = 1;
+	 end
+      end // else: !if(n_rst == 1'b0)
+   end // always_ff @
+
+/*
+   always_comb begin
+      if(ready == 1) begin
+	 d_plus = (previous != data_out) | eop;
+	 d_minus = ~(previous != data_out) | eop;
+      end else begin
+	 d_plus = 1;
+	 d_minus = 1;
       end
-   end
-
-   assign d_plus = (previous != data_out) | eop;
-   assign d_minus = ~(previous != data_out) | eop;
-
+   end*/
 endmodule // transmit

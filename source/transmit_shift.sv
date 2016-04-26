@@ -12,11 +12,16 @@ module transmit_shift(
 		      input wire       load_enable,
 		      input wire [7:0] data,
 		      input wire       eop,
-		      output wire      data_out
+		      output wire      data_out,
+		      output reg      ready
 		      );
 
    reg 				       shift_enable;
-   
+
+   always_ff @ (posedge clk, negedge n_rst) begin
+      ready <= shift_enable;
+   end
+      
    always_comb begin
       if(load_enable == 1) begin
 	 shift_enable = 1;
