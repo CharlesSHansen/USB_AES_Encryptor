@@ -23,10 +23,10 @@ module aes_g_function
    
    // Obtain SubWord using SubBytes
    // RotWord is implemented using rotated input
-   SubBytes subbytes_0(.*, .in(wp13), .out(subword[0:7]));
-   SubBytes subbytes_1(.*, .in(wp23), .out(subword[8:15]));
-   SubBytes subbytes_2(.*, .in(wp33), .out(subword[16:23]));
-   SubBytes subbytes_3(.*, .in(wp03), .out(subword[24:31]));
+   sBox subbytes_0(.inData(wp13), .outData(subword[0:7]));
+   sBox subbytes_1(.inData(wp23), .outData(subword[8:15]));
+   sBox subbytes_2(.inData(wp33), .outData(subword[16:23]));
+   sBox subbytes_3(.inData(wp03), .outData(subword[24:31]));
    
    logic [0:31]   w0, w1, w2, w3;
    assign w0 = wp0 ^ {subword[0:7] ^ Rcon, subword[8:31]};
