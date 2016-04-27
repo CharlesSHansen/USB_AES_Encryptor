@@ -18,7 +18,7 @@ module transmit(
 		);
 
    reg 			    previous = 1;
-   
+
    always_ff @ (posedge clk, negedge n_rst) begin
       if(n_rst == 1'b0) begin
 	 previous <= 1;
@@ -39,7 +39,7 @@ module transmit(
 	    d_minus = 1;
 	 end
       end // else: !if(n_rst == 1'b0)
-   end // always_ff @
+end // always_ff @
 
 /*
    always_comb begin

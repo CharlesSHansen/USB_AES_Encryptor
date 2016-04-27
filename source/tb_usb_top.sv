@@ -12,7 +12,7 @@ module tb_usb_top();
 
 reg tb_n_rst, tb_d_plus_in, tb_d_minus_in, tb_in_pwr, tb_in_gnd, tb_d_plus_out, tb_d_minus_out, tb_out_pwr, tb_out_gnd;
 reg [7:0] tb_data;
-reg tb_load_enable, tb_data_out, tb_eop;
+reg tb_load_enable, tb_data_out, tb_eop, tb_ready;
 
 // BEGIN CLK GEN
 reg tb_clk;
@@ -25,11 +25,31 @@ always begin : CLK_GEN
 end
 // END CLK GEN 
 
+// GENERATE CLK/8
+reg [1:0] counter;
+reg slow_clk;
+reg clk_flag;
+always @(posedge tb_clk, negedge tb_n_rst) begin
+	if (!tb_n_rst) begin
+		clk_flag <= 0;
+		counter <= 2'b00;
+	end else begin
+		if (counter == 2'b11) begin
+			counter <= 2'b00;
+			clk_flag <= clk_flag^1;
+		end else begin
+			counter <= counter+1;
+		end
+	end
+end 
+assign slow_clk = clk_flag;
+// END SLOW CLOCK GEN
+
 usb_top top_level_DUT(.clk(tb_clk), .n_rst(tb_n_rst), .d_plus_in(tb_d_plus_in), .d_minus_in(tb_d_minus_in), .in_pwr(tb_in_pwr), .in_gnd(tb_in_gnd), .d_plus_out(tb_d_plus_out), .d_minus_out(tb_d_minus_out), .out_pwr(tb_out_pwr), .out_gnd(tb_out_gnd));
 
-transmit_shift tb_transmit_shift(.clk(tb_clk), .n_rst(tb_n_rst), .load_enable(tb_load_enable), .data(tb_data), .data_out(tb_data_out));
+transmit_shift tb_transmit_shift(.clk(slow_clk), .n_rst(tb_n_rst), .load_enable(tb_load_enable), .data(tb_data), .eop(tb_eop), .data_out(tb_data_out), .ready(tb_ready));
 
-transmit tb_transmit(.clk(tb_clk), .n_rst(tb_n_rst), .eop(tb_eop), .data(tb_data_out), .d_plus(tb_d_plus_in), .d_minus(tb_d_minus_in));
+transmit tb_transmit(.clk(slow_clk), .n_rst(tb_n_rst), .eop(tb_eop), .data(tb_data_out), .ready(tb_ready), .d_plus(tb_d_plus_in), .d_minus(tb_d_minus_in));
 
 // BEGIN FILE I/O
 integer data_file;
@@ -43,27 +63,30 @@ initial begin
 		$display("ERROR: Couldn't open input data file.");
 		$finish;
 	end
-	tb_n_rst = 1;
 	tb_load_enable = 0;
-	@(negedge tb_clk);
 	tb_n_rst = 0;
+	tb_eop = 0;
 	@(negedge tb_clk);
 	tb_n_rst = 1;
 end
 
-always @(posedge tb_clk) begin
+always @(posedge slow_clk) begin
 	if (tb_n_rst) begin
 		scan_file = $fscanf(data_file, "%c", captured_data);
 		if (!$feof(data_file)) begin
 			// use captured_data as a reg
-			//gets 1 character per clock cycle
+			//gets 1 character per 8 clock cycles
 			tb_data = captured_data;
+			//tb_eop = 0;
 			tb_load_enable = 1;
-			@(posedge tb_clk)
+			@(posedge slow_clk);
 			tb_load_enable = 0;
-			repeat (8) begin
-				@(posedge tb_clk);
+			@(posedge slow_clk);
+			//2 cycle delay for transmit D+ & D- to begin following input data
+			repeat (8) begin //8 bits @ 8 cycles each for a readable speed for the RCU
+				@(posedge slow_clk);
 			end
+			//tb_eop = 1;
 		end
 	end
 end

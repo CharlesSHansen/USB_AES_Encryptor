@@ -29,19 +29,20 @@ module usb_top(
    reg 			   eop, shift_enable;
    reg 			   byte_recieved;
    reg 			   encrypted_data;
+reg ready;
 
 
    sync_high SHI(
 		 .clk(clk),
 		 .n_rst(n_rst),
-		 .async_in(d_plus),
+		 .async_in(d_plus_in),
 		 .sync_out(d_plus_sync)
 		 );
 
    sync_low SHL(
 		.clk(clk),
 		.n_rst(n_rst),
-		.async_in(d_minus),
+		.async_in(d_minus_in),
 		.sync_out(d_minus_sync)
 		);
 
@@ -66,7 +67,6 @@ module usb_top(
 	      .eop(eop),
 	      .d_orig(d_orig)
 	      );
-   //edit?
    timer TIM(
 	     .clk(clk),
 	     .n_rst(n_rst),
@@ -132,7 +132,9 @@ module usb_top(
 			      .n_rst(n_rst),
 			      .load_enable(enable_write),
 			      .data(shift_write),
-			      .data_out(transmit_out)
+			      .eop(eop),
+			      .data_out(transmit_out),
+			      .ready(ready)
 			      );
    
    transmit DATA_OUT(
@@ -140,6 +142,7 @@ module usb_top(
 		     .n_rst(n_rst),
 		     .eop(enable_eop),
 		     .data(transmit_out),
+		     .ready(ready),
 		     .d_plus(d_plus_out),
 		     .d_minus(d_minus_out)
 		     );
