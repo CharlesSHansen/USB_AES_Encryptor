@@ -132,7 +132,7 @@ reg ready;
 			      .n_rst(n_rst),
 			      .load_enable(enable_write),
 			      .data(shift_write),
-			      .eop(eop),
+			      .eop(enable_eop),
 			      .data_out(transmit_out),
 			      .ready(ready)
 			      );
@@ -140,14 +140,14 @@ reg ready;
    transmit DATA_OUT(
 		     .clk(clk),
 		     .n_rst(n_rst),
-		     .eop(enable_eop),
 		     .data(transmit_out),
 		     .ready(ready),
+		     .eop(eop),
 		     .d_plus(d_plus_out),
 		     .d_minus(d_minus_out)
 		     );
 
-   pid_fifo PID(
+   pid_fifo PID( //PID fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.r_enable(rpid_enable),
