@@ -10,7 +10,6 @@
 module transmit(
 		input wire  clk,
 		input wire  n_rst,
-		input wire  eop,
 		input wire  data,
 		input wire  ready,
 		output reg d_plus,
@@ -35,8 +34,8 @@ module transmit(
 	    end
 	 end
 	 else begin
-	    d_plus = 1;
-	    d_minus = 1;
+	    d_plus = 0;
+	    d_minus = 0;
 	 end
       end // else: !if(n_rst == 1'b0)
 end // always_ff @
