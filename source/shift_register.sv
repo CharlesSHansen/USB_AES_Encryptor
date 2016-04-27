@@ -14,7 +14,7 @@ module shift_register(
 		       output wire [7:0] rcv_data
 		      );
 
-   flex_stp_sr #(8, 0) call(
+   flex_stp_sr #(8, 1) call(
 		    .clk(clk),
 		    .n_rst(n_rst),
 		    .shift_enable(shift_enable),

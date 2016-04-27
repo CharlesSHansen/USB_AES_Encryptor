@@ -30,7 +30,7 @@ module transmit_shift(
 	 shift_enable = 0;
    end // always_comb
    
-   flex_pts_sr #(8,0) call(
+   flex_pts_sr #(8,1) call(
 		    .clk(clk),
 		    .n_rst(n_rst),
 		    .shift_enable(shift_enable),
