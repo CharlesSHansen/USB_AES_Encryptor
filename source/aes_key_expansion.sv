@@ -12,7 +12,7 @@ module KeyExpansion (
 		     output [0:1407] schedule );
    
    // Round constant table, derived from Rijndael documentation
-   const byte 			     unsigned Rcon [0:9] = '{ 8'h01,8'h02,8'h04,8'h08,8'h10,8'h20,8'h40,8'h80,8'h1b,8'h36 };
+   const byte unsigned Rcon [0:9] = '{ 8'h01,8'h02,8'h04,8'h08,8'h10,8'h20,8'h40,8'h80,8'h1b,8'h36 };
    
    // The 10 round keys that will be used
    logic [0:127] 		     key0, key1, key2, key3, key4, key5, key6, key7, key8, key9;
