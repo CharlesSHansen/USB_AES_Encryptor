@@ -15,10 +15,11 @@ module tb_aes_key_expansion
    localparam CHECK_DELAY = 1;
 
    reg tb_clk;
+   reg tb_ready;
    logic [0:127] tb_key;
    logic [0:1407] tb_sched;
    
-   KeyExpansion DUT (.clk(tb_clk), .key(tb_key), .schedule(tb_sched));
+   aes_key_expansion DUT (.clk(tb_clk), .ready(tb_ready), .key(tb_key), .schedule(tb_sched));
    
    
    always
@@ -34,6 +35,9 @@ module tb_aes_key_expansion
   @(posedge tb_clk);
   tb_key = 128'h2b7e151628aed2a6abf7158809cf4f3c;
   @(posedge tb_clk);
-  @(posedge tb_clk);     
+  @(posedge tb_clk);
+  tb_key = 128'h000102030405060708090a0b0c0d0e0f;
+  @(posedge tb_clk);
+  @(posedge tb_clk);
      end
 endmodule

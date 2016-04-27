@@ -1,16 +1,26 @@
 // $Id: $
-// File name:   KeyExpansion.sv
+// File name:   aes_key_expansion.sv
 // Created:     4/25/2016
 // Author:      Alexander Dunker
 // Lab Section: 337-04
 // Version:     1.0  Initial Design Entry
 // Description: Key expansion test.
 
-module KeyExpansion (
-		     input 	     clk,
-		     input [0:127]   key, 
-		     output [0:1407] schedule );
+module aes_key_expansion (
+   input reg clk,
+   input reg ready,
+	input reg [0:127]   key, 
+	output reg [0:1407] schedule );
    
+   reg [0:1407] capture;  
+
+   always_ff @ (posedge clk) begin
+      if(ready) begin
+         schedule <= capture;
+      end else begin
+         schedule <= schedule;
+      end
+   end
    // Round constant table, derived from Rijndael documentation
    const byte unsigned Rcon [0:9] = '{ 8'h01,8'h02,8'h04,8'h08,8'h10,8'h20,8'h40,8'h80,8'h1b,8'h36 };
    
@@ -18,7 +28,7 @@ module KeyExpansion (
    logic [0:127] 		     key0, key1, key2, key3, key4, key5, key6, key7, key8, key9;
    
    // First key is just the original key
-   assign schedule[0:127] = key;
+   assign capture[0:127] = key;
    
    // Perform the expansions of the keys, based on the g function to make
    // each subsequent key
@@ -33,5 +43,6 @@ module KeyExpansion (
    aes_g_function key_8 (.clk(clk), .key_in(key7), .key_out(key8), .Rcon(Rcon[8]));
    aes_g_function key_9 (.clk(clk), .key_in(key8), .key_out(key9), .Rcon(Rcon[9]));
    
-   assign schedule[128:1407] = {key0, key1, key2, key3, key4, key5, key6, key7, key8, key9};
+   assign capture[128:1407] = {key0, key1, key2, key3, key4, key5, key6, key7, key8, key9};
+
 endmodule
