@@ -45,7 +45,7 @@ module extract_fifo(
 	   tmp = '0;
 	   rdy = 0;
 	   pop = 0;
-	   if(full == 1'b1) begin
+	   if(complete == 1'b1) begin
 	      nstate = ONE;
 	      pop = 1;
 	   end
