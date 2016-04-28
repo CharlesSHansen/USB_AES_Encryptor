@@ -16,6 +16,31 @@ reg tb_load_enable, tb_data_out, tb_eop, tb_ready;
 reg [2:0] tb_packet_counter;
 reg [127:0] full_data_out;
 reg complete;
+reg last_sync;
+
+//Token Packets
+localparam [3:0] 			    token1 = 4'b0001;
+localparam [3:0] 			    token2 = 4'b1001;
+localparam [3:0] 			    token3 = 4'b0101;
+localparam [3:0] 			    token4 = 4'b1101;
+
+//Data Packets
+localparam [3:0] 			    data1 = 4'b0011;
+localparam [3:0] 			    data2 = 4'b1011;
+localparam [3:0] 			    data3 = 4'b0111;
+localparam [3:0] 			    data4 = 4'b1111;
+
+//Handshake Packets
+localparam [3:0] 			    hand1 = 4'b0010;
+localparam [3:0] 			    hand2 = 4'b1010;
+localparam [3:0] 			    hand3 = 4'b1110;
+localparam [3:0] 			    hand4 = 4'b0110;
+
+//Start of Frame Packet
+localparam [3:0] 			    spec1 = 4'b1100;
+localparam [3:0] 			    spec2 = 4'b1100;
+localparam [3:0] 			    spec3 = 4'b1000;
+localparam [3:0] 			    spec4 = 4'b0100;
 
 // BEGIN CLK GEN
 reg tb_clk;
@@ -62,7 +87,7 @@ logic unsigned [7:0] captured_data; //one character at a time
 `define NULL 0
 
 initial begin
-	data_file = $fopen("./source/usb_data.dat", "r");
+	data_file = $fopen("./source/mixed_data.dat", "r");
 	if (data_file == `NULL) begin
 		$display("ERROR: Couldn't open input data file.");
 		$finish;
@@ -78,6 +103,7 @@ initial begin
 	tb_n_rst = 0;
 	tb_eop = 0;
 	tb_packet_counter = 3'b000;
+	last_sync = 0;
 	@(posedge tb_clk);
 	tb_n_rst = 1;
 end
@@ -89,9 +115,24 @@ always @(posedge slow_clk) begin
 		if (!$feof(data_file)) begin
 			//use captured_data as a reg
 			//gets 1 character per 8 slow clock cycles (tb_clk/8)
+			if (captured_data == 8'b10000000) begin
+				last_sync = 1;
+			end else begin
+				if (last_sync == 1) begin
+					if ((captured_data[7:4] == data1) || (captured_data[7:4] == data2) || (captured_data[7:4] == data3) || (captured_data[7:4] == data4))
+						tb_packet_counter = 3'b001; // (sync -> PID -> data -> CRC -> CRC -> eop)
+					if((captured_data[7:4] == token1) || (captured_data[7:4] == token2) || (captured_data[7:4] == token3) || (captured_data[7:4] == token4))
+						tb_packet_counter = 3'b010; // (sync -> PID -> byte -> byte)
+					if((captured_data[7:4] == hand1) || (captured_data[7:4] == hand2) || (captured_data[7:4] == hand3) || (captured_data[7:4] == hand4))
+						tb_packet_counter = 3'b100; // (sync -> PID -> eop)
+					if((captured_data[7:4] == spec1) || (captured_data[7:4] == spec2) || (captured_data[7:4] == spec3) || (captured_data[7:4] == spec4))
+						tb_packet_counter = 3'b010; // (sync -> PID -> byte -> byte)
+					last_sync = 0;
+				end
+			end
 			tb_packet_counter = tb_packet_counter+1;
 			if (tb_packet_counter == 3'b110) begin
-				// BEGIN DATA EOP TIMER (count to 5 bytes) (sync -> PID -> data -> CRC -> CRC)
+				// BEGIN DATA EOP TIMER
 				tb_eop = 1;
 				tb_packet_counter = 3'b000;
 				tb_data = 8'b11111111; //waiting for data
