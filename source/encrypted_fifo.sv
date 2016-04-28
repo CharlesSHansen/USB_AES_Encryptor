@@ -49,7 +49,8 @@ module encrypted_fifo(
 	IDLE : begin
 	   increment = 0;
 	   w_data = '0;
-	   if(full == 1'b1) begin
+	   if(complete == 1'b1) begin
+	      increment = 1;
 	      w_data = raw_data[7:0];
 	      nstate = ONE;
 	   end
