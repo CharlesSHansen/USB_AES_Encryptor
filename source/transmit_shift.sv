@@ -19,10 +19,14 @@ module transmit_shift(
    reg 				       shift_enable;
 
    always_ff @ (posedge clk, negedge n_rst) begin
-      ready <= shift_enable;
+      if(n_rst == 0)
+	ready <= 0;
+      else
+	ready <= shift_enable;
    end
       
    always_comb begin
+      shift_enable = ready;
       if(load_enable == 1) begin
 	 shift_enable = 1;
       end
