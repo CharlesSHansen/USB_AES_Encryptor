@@ -32,7 +32,7 @@ module encrypted_fifo(
 			    .empty(empty),
 			    .full(full));
 
-   typedef enum 			 bit [4:0] {IDLE, ONE, WAIT1, TWO, WAIT2, THREE, WAIT3, FOUR, WAIT4, FIVE, WAIT5, SIX, WAIT6, SEVEN, WAIT7, EIGHT, WAIT8, NINE, WAIT9, TEN, WAIT10, ELEVEN, WAIT11, TWELVE, WAIT12, THIRTEEN, WAIT13, FOURTEEN, WAIT14, READ} stateType;
+   typedef enum 			 bit [4:0] {IDLE, START, ONE, WAIT1, TWO, WAIT2, THREE, WAIT3, FOUR, WAIT4, FIVE, WAIT5, SIX, WAIT6, SEVEN, WAIT7, EIGHT, WAIT8, NINE, WAIT9, TEN, WAIT10, ELEVEN, WAIT11, TWELVE, WAIT12, THIRTEEN, WAIT13, FOURTEEN, READ} stateType;
    stateType state;
    stateType nstate;
 
@@ -52,43 +52,47 @@ module encrypted_fifo(
 	   w_data = '0;
 	   if(complete == 1'b1) begin
 	      data = raw_data;
-	      increment = 1;
-	      w_data = data[127:120];
-	      nstate = ONE;
+	      nstate = START;
 	   end
 	   else begin
 	      nstate = IDLE;
 	      data = '0;
 	   end
+	end // case: IDLE
+
+	START : begin
+	   increment = 1;
+	   w_data = data[7:0];
+	   nstate = ONE;
 	end
 
 	ONE : begin
-	   w_data = data[119:112];
+	   w_data = data[15:8];
 	   nstate = TWO;
 	end
 
 	TWO : begin
-	   w_data = data[111:104];
+	   w_data = data[23:16];
 	   nstate = THREE;
 	end
 
 	THREE : begin
-	   w_data = data[103:96];
+	   w_data = data[31:24];
 	   nstate = FOUR;
 	end
 	
 	FOUR : begin
-	   w_data = data[95:88];
+	   w_data = data[39:32];
 	   nstate = FIVE;
 	end
 
 	FIVE : begin
-	   w_data = data[87:80];
+	   w_data = data[47:40];
 	   nstate = SIX;
 	end
 
 	SIX : begin
-	   w_data = data[71:64];
+	   w_data = data[55:48];
 	   nstate = SEVEN;
 	end
 
@@ -98,37 +102,37 @@ module encrypted_fifo(
 	end
 	
 	EIGHT : begin
-	   w_data = data[55:48];
+	   w_data = data[71:64];
 	   nstate = NINE;
 	end
 	
 	NINE : begin
-	   w_data = data[47:40];
+	   w_data = data[87:80];
 	   nstate = TEN;
 	end
 
 	TEN : begin
-	   w_data = data[39:32];
+	   w_data = data[95:88];
 	   nstate = ELEVEN;
 	end
 
 	ELEVEN : begin
-	   w_data = data[31:24];
+	   w_data = data[103:96];
 	   nstate = TWELVE;
 	end
 
 	TWELVE : begin
-	   w_data = data[23:16];
+	   w_data = data[111:104];
 	   nstate = THIRTEEN;
 	end
 
 	THIRTEEN : begin
-	   w_data = data[15:8];
+	   w_data = data[119:112];
 	   nstate = FOURTEEN;
 	end
 	
 	FOURTEEN : begin
-	   w_data = data[7:0];
+	   w_data = data[127:120];
 	   nstate = READ;
 	end
 
