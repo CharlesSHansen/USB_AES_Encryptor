@@ -19,7 +19,8 @@ module encrypted_fifo(
 
    reg 					 increment;
    reg [7:0] 				 w_data;
-   
+   reg [127:0] 				 data;
+      
    
    flex_fifo #(8,16,4) CALL(
 			    .clk(clk),
@@ -50,138 +51,84 @@ module encrypted_fifo(
 	   increment = 0;
 	   w_data = '0;
 	   if(complete == 1'b1) begin
+	      data = raw_data;
 	      increment = 1;
-	      w_data = raw_data[7:0];
+	      w_data = data[127:120];
 	      nstate = ONE;
 	   end
-	   else
-	     nstate = IDLE;
+	   else begin
+	      nstate = IDLE;
+	      data = '0;
+	   end
 	end
 
 	ONE : begin
-	   w_data = raw_data[15:8];
-	   nstate = WAIT1;
-	end
-
-	WAIT1 : begin
+	   w_data = data[119:112];
 	   nstate = TWO;
 	end
 
 	TWO : begin
-	   w_data = raw_data[23:16];
-	   nstate = WAIT2;
-	end
-
-	WAIT2 : begin
+	   w_data = data[111:104];
 	   nstate = THREE;
 	end
 
 	THREE : begin
-	   w_data = raw_data[31:24];
-	   nstate = WAIT3;
-	end
-	
-	WAIT3 : begin
+	   w_data = data[103:96];
 	   nstate = FOUR;
 	end
 	
 	FOUR : begin
-	   w_data = raw_data[39:32];
-	   nstate = WAIT4;
-	end
-
-	WAIT4 : begin
+	   w_data = data[95:88];
 	   nstate = FIVE;
 	end
-	
-	FIVE : begin
-	   w_data = raw_data[47:40];
-	   nstate = WAIT5;
-	end
 
-	WAIT5 : begin
+	FIVE : begin
+	   w_data = data[87:80];
 	   nstate = SIX;
 	end
 
 	SIX : begin
-	   w_data = raw_data[55:48];
-	   nstate = WAIT6;
-	end
-
-	WAIT6 : begin
+	   w_data = data[71:64];
 	   nstate = SEVEN;
 	end
 
        	SEVEN : begin
-	   w_data = raw_data[63:56];
-	   nstate = WAIT7;
-	end
-
-	WAIT7 : begin
+	   w_data = data[63:56];
 	   nstate = EIGHT;
 	end
 	
 	EIGHT : begin
-	   w_data = raw_data[71:64];
-	   nstate = WAIT8;
-	end
-
-	WAIT8 : begin
-	   w_data = raw_data[79:72];
+	   w_data = data[55:48];
 	   nstate = NINE;
 	end
 	
 	NINE : begin
-	   w_data = raw_data[87:80];
-	   nstate = WAIT9;
- 	end
-
-	WAIT9 : begin
+	   w_data = data[47:40];
 	   nstate = TEN;
 	end
 
 	TEN : begin
-	   w_data = raw_data[95:88];
-	   nstate = WAIT10;
-	end
-
-	WAIT10 : begin
+	   w_data = data[39:32];
 	   nstate = ELEVEN;
 	end
 
 	ELEVEN : begin
-	   w_data = raw_data[103:96];
-	   nstate = WAIT11;
-	end
-
-	WAIT11 : begin
+	   w_data = data[31:24];
 	   nstate = TWELVE;
 	end
 
 	TWELVE : begin
-	   w_data = raw_data[111:104];
-	   nstate = WAIT12;
-	end
-
-	WAIT12 : begin
+	   w_data = data[23:16];
 	   nstate = THIRTEEN;
 	end
 
 	THIRTEEN : begin
-	   w_data = raw_data[119:112];
-	   nstate = WAIT13;
-	end
-
-	WAIT13 : begin
+	   w_data = data[15:8];
 	   nstate = FOURTEEN;
 	end
 	
 	FOURTEEN : begin
-	   w_data = raw_data[127:120];
-	   nstate = WAIT14;
-	end
-
-	WAIT14 : begin
+	   w_data = data[7:0];
 	   nstate = READ;
 	end
 
