@@ -25,7 +25,7 @@ module flex_fifo
    reg [STACKCNT-1:0] 		    write_point;
    reg [STACKCNT-1:0] 		    read_point;
    reg 				    not_used, not_used2;
-   wire 			    w_not_used;
+   reg 				    w_not_used;
 
    localparam count_to = STACKSIZE-1;
       
@@ -60,7 +60,7 @@ module flex_fifo
       else
 	empty = 0;
       
-      if((write_point) % STACKSIZE == read_point - 1)
+      if((write_point+1) % STACKSIZE == read_point)
 	full = 1;
       else
 	full = 0;
