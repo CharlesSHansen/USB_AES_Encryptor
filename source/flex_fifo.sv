@@ -26,7 +26,7 @@ module flex_fifo
    reg [STACKCNT-1:0] 		    read_point;
    reg 				    not_used, not_used2;
    reg 				    w_not_used;
-
+   
    localparam count_to = STACKSIZE-1;
       
    
@@ -40,8 +40,8 @@ module flex_fifo
       end
    end
    
-   flex_full_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable), .rollover_val(count_to[STACKCNT-1:0]+1'b1), .count_out(write_point), .rollover_flag(w_not_used));
-   flex_full_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable), .rollover_val(count_to[STACKCNT-1:0]+1'b1), .count_out(read_point), .rollover_flag(w_not_used));
+   flex_full_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable && !full), .rollover_val(count_to[STACKCNT-1:0]), .count_out(write_point), .rollover_flag(w_not_used));
+   flex_full_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable && !empty), .rollover_val(count_to[STACKCNT-1:0]), .count_out(read_point), .rollover_flag(w_not_used));
 
    generate
       for(index = 0; index < STACKSIZE; index = index + 1) begin
@@ -60,7 +60,7 @@ module flex_fifo
       else
 	empty = 0;
       
-      if((write_point+1) % STACKSIZE == read_point)
+      if((write_point+1) % (STACKSIZE) == read_point)
 	full = 1;
       else
 	full = 0;
