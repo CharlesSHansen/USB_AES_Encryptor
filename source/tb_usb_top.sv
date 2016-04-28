@@ -14,6 +14,8 @@ reg tb_n_rst, tb_d_plus_in, tb_d_minus_in, tb_in_pwr, tb_in_gnd, tb_d_plus_out, 
 reg [7:0] tb_data;
 reg tb_load_enable, tb_data_out, tb_eop, tb_ready;
 reg [2:0] tb_packet_counter;
+reg [127:0] full_data_out;
+reg complete;
 
 // BEGIN CLK GEN
 reg tb_clk;
@@ -46,15 +48,16 @@ end
 assign slow_clk = clk_flag;
 // END SLOW CLOCK GEN
 
-usb_top top_level_DUT(.clk(tb_clk), .n_rst(tb_n_rst), .d_plus_in(tb_d_plus_in), .d_minus_in(tb_d_minus_in), .in_pwr(tb_in_pwr), .in_gnd(tb_in_gnd), .d_plus_out(tb_d_plus_out), .d_minus_out(tb_d_minus_out), .out_pwr(tb_out_pwr), .out_gnd(tb_out_gnd));
+usb_top top_level_DUT(.clk(tb_clk), .n_rst(tb_n_rst), .d_plus_in(tb_d_plus_in), .d_minus_in(tb_d_minus_in), .in_pwr(tb_in_pwr), .in_gnd(tb_in_gnd), .d_plus_out(tb_d_plus_out), .d_minus_out(tb_d_minus_out), .out_pwr(tb_out_pwr), .out_gnd(tb_out_gnd), .data_out(full_data_out), .complete(complete));
 
 transmit_shift tb_transmit_shift(.clk(slow_clk), .n_rst(tb_n_rst), .load_enable(tb_load_enable), .data(tb_data), .eop(tb_eop), .data_out(tb_data_out), .ready(tb_ready));
 
 transmit tb_transmit(.clk(slow_clk), .n_rst(tb_n_rst), .data(tb_data_out), .ready(tb_ready), .eop(tb_eop), .d_plus(tb_d_plus_in), .d_minus(tb_d_minus_in));
 
-// BEGIN FILE I/O
+// BEGIN FILE INPUTTING
 integer data_file;
 integer scan_file;
+integer output_file;
 logic unsigned [7:0] captured_data; //one character at a time
 `define NULL 0
 
@@ -62,6 +65,11 @@ initial begin
 	data_file = $fopen("./source/usb_data.dat", "r");
 	if (data_file == `NULL) begin
 		$display("ERROR: Couldn't open input data file.");
+		$finish;
+	end
+	output_file = $fopen("./source/encrypted_data.txt", "w");
+	if (output_file == `NULL) begin
+		$display("ERROR: Couldn't open output data file.");
 		$finish;
 	end
 	tb_n_rst = 1;
@@ -83,7 +91,7 @@ always @(posedge slow_clk) begin
 			//gets 1 character per 8 slow clock cycles (tb_clk/8)
 			tb_packet_counter = tb_packet_counter+1;
 			if (tb_packet_counter == 3'b110) begin
-				// BEGIN DATA EOP TIMER (count to 5 bytes) (sync -> PID -> data -> CRC -> crc)
+				// BEGIN DATA EOP TIMER (count to 5 bytes) (sync -> PID -> data -> CRC -> CRC)
 				tb_eop = 1;
 				tb_packet_counter = 3'b000;
 				tb_data = 8'b11111111; //waiting for data
@@ -109,6 +117,14 @@ always @(posedge slow_clk) begin
 		end
 	end
 end
-// END FILE I/O
+// END FILE INPUTTING
+
+// BEGIN ENCRYPTED DATA OUTPUTTING
+always @(posedge tb_clk) begin
+	if (complete) begin
+		$fwrite(output_file, "%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x", full_data_out[127:120], full_data_out[119:112], full_data_out[111:104], full_data_out[103:96], full_data_out[95:88], full_data_out[87:80], full_data_out[79:72], full_data_out[71:64], full_data_out[63:56], full_data_out[55:48], full_data_out[47:40], full_data_out[39:32], full_data_out[31:24], full_data_out[23:16], full_data_out[15:8], full_data_out[7:0]);
+	end
+end
+// END ENCRYPTED FILE OUTPUTTING
 
 endmodule
