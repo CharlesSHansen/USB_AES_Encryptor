@@ -29,19 +29,19 @@ module usb_top(
    reg 			   eop, shift_enable;
    reg 			   byte_recieved;
    reg 			   encrypted_data;
-reg []
+
 reg [127:0] data_in;
 reg [127:0] data_out;
 reg ready, complete, extract_ready;
-reg encrypt_data_full, encrypt_data_empty
-reg [7:0] encrypt_r_data;
+reg encrypt_data_full, encrypt_data_empty;
+reg [7:0] encrypted_r_data;
 
 // GENERATE SLOW CLOCK = CLK/8
 reg [1:0] counter;
 reg slow_clk;
 reg clk_flag;
-always @(posedge tb_clk, negedge tb_n_rst) begin
-	if (!tb_n_rst) begin
+always @(posedge clk, negedge n_rst) begin
+	if (!n_rst) begin
 		clk_flag <= 0;
 		counter <= 2'b00;
 	end else begin
@@ -235,7 +235,7 @@ encrypted_fifo ENCRYPTED( //encrypted data fifo
 			      .ready(ready)
 			      );
    
-   transmit DATA_OUT( //output USB transmitter for serial data -> D+ & D-
+   transmit_out DATA_OUT( //output USB transmitter for serial data -> D+ & D-
 		     .clk(slow_clk),
 		     .n_rst(n_rst),
 		     .data(transmit_out),

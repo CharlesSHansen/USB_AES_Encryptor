@@ -21,6 +21,7 @@ module aes_key_expansion (
          schedule <= schedule;
       end
    end
+   
    // Round constant table, derived from Rijndael documentation
    const byte unsigned Rcon [0:9] = '{ 8'h01,8'h02,8'h04,8'h08,8'h10,8'h20,8'h40,8'h80,8'h1b,8'h36 };
    
