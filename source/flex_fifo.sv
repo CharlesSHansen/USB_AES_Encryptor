@@ -25,8 +25,8 @@ module flex_fifo
    reg [STACKCNT-1:0] 		    write_point;
    reg [STACKCNT-1:0] 		    read_point;
    reg 				    not_used, not_used2;
-   reg 				    w_not_used;
-   
+   wire 				    w_not_used;
+
    localparam count_to = STACKSIZE-1;
       
    
@@ -49,9 +49,10 @@ module flex_fifo
 
    generate
       for(index = 0; index < STACKSIZE; index = index + 1) begin
-	 always_comb begin
-	    if(write_point == index && w_enable && full == 0)
+	always_comb begin
+	    if(write_point == index && w_enable && full == 0) begin
 	      nxt_memory[index] = w_data;
+		end		
 	    else
 	      nxt_memory[index] = memory[index];
 	 end
