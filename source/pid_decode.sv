@@ -72,7 +72,7 @@ always_comb begin
 	enable_pid = 0;
 	enable_nondata = 0;
 	next_state = state;
-
+   packet_counter = packet_counter;
 	case(state)
 	
 	WAIT_IDLE:
