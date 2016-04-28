@@ -16,7 +16,9 @@ module usb_top(
 	       output wire d_plus_out,
 	       output wire d_minus_out,
 	       output wire out_pwr,
-	       output wire out_gnd
+	       output wire out_gnd,
+		output wire [127:0] data_out, //strictly for demonstration purposes to chow encrypted data
+		output wire complete //strictly to know when to write out finished encrypted data for demonstration
 	       );
 
    reg 			   rdata_enable, rnd_enable, rpid_enable, rdcrc_enable, rencrypt_enable;
@@ -31,8 +33,7 @@ module usb_top(
    reg 			   encrypted_data;
 
 reg [127:0] data_in;
-reg [127:0] data_out;
-reg ready, complete, extract_ready;
+reg ready, extract_ready;
 reg encrypt_data_full, encrypt_data_empty;
 reg [7:0] encrypted_r_data;
 

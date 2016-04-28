@@ -14,6 +14,7 @@ def usb_data():
     data_size = 32 # 8-PID, 8-data, 16-CRC -> eop
     handshake_size = 8 # 8-PID, -> eop
     sof_size = 24 # 8-PID, 11-frame name, 5-CRC -> eop
+    packet_counter = 100
 
     with open("./usb_data.dat", "wb") as usb_file:
         with open(sys.argv[1], "r") as data_file:
@@ -31,6 +32,21 @@ def usb_data():
                     byte_data_packet = [int2bytes(item) for item in integer_data_packet]
                     for item in byte_data_packet:
                         usb_file.write(item)
+    
+    with open("./packet_data.txt", "wb") as packet_file:
+        while packet_counter > 0:
+            packet_type = randint(0,2)
+            if (packet_type == 0): #token
+                data = [sync, token_pids[randint(0,3)], '0b01010101', '0b00110011']
+            if (packet_type == 1): #handshake
+                data = [sync, handshake_pids[randint(0,3)]]
+            if (packet_type == 2): #start of frame
+                data = [sync, sof_pids[randint(0,3)], '0b11110000', '0b11001100']
+            data_ints = [int(item, 2) for item in data]
+            data_bytes = [int2bytes(item) for item in data_ints]
+            for item in data_bytes:
+                packet_file.write(item)
+            packet_counter -= 1
     return
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):
