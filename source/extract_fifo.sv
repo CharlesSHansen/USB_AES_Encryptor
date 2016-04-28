@@ -46,16 +46,14 @@ module extract_fifo(
 	   rdy = 0;
 	   pop = 0;
 	   if(full == 1'b1) begin
-	      nstate = ONE;
 	      pop = 1;
+	      tmp[127:120] = data;
+	      nstate = TWO;
 	   end
 	   else
 	     nstate = IDLE;
 	end
-	ONE : begin
-	   tmp[127:120] = data;
-	   nstate = TWO;
-	end
+
 	TWO : begin
 	   tmp[119:112] = data;
 	   nstate = THREE;
