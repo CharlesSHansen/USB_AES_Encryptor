@@ -35,7 +35,11 @@ module flex_fifo
    always_ff @ (posedge clk, negedge n_rst) begin
       if(n_rst == 1'b0) begin
 	 memory <= 0;
+	not_used <= 0;
+	not_used2 <= 0;
       end else begin
+	not_used <= 0;
+	not_used2 <= 0;
 	 memory <= nxt_memory;
       end
    end
@@ -70,3 +74,4 @@ module flex_fifo
    
 endmodule // flex_fifo
 
+	

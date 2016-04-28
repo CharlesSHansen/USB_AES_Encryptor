@@ -20,7 +20,7 @@ module usb_top(
 	       );
 
    reg 			   rdata_enable, rnd_enable, rpid_enable, rdcrc_enable, rencrypt_enable;
-   reg [7:0] 		   r_data, r_nd, r_pid, r_dcrc, r_encrypt, shift_write, rcv_data;
+   reg [7:0] 		   read_data, r_nd, r_pid, r_dcrc, r_encrypt, shift_write, rcv_data;
    reg 			   data_empty, pad_empty, pid_empty, nondata_empty, encrypt_empty;
    reg 			   data_full, pad_full, pid_full, nondata_full, encrypt_full;
    reg 			   enable_pad, enable_data, enable_pid, enable_nondata, enable_encrypt, enable_eop, enable_write;
@@ -171,7 +171,7 @@ assign slow_clk = clk_flag;
 		   .r_enable(rdata_enable),
 		   .w_enable(enable_data),
 		   .w_data(rcv_data),
-		   .r_data(r_data),
+		   .r_data(read_data),
 		   .empty(data_empty),
 		   .full(data_full)
 		   );
@@ -180,7 +180,7 @@ extract_fifo EXTRACT( //extractor to pack 128 bits from data fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.full(data_full),
-		.data(r_data),
+		.data(read_data),
 		.pop(rdata_enable),
 		.ready(extract_ready),
 		.out(data_in)
@@ -221,7 +221,7 @@ encrypted_fifo ENCRYPTED( //encrypted data fifo
 		  .nd_enable(rnd_enable),
 		  .eop_enable(enable_eop),
 		  .pid_enable(rpid_enable),
-		  .dcrc_enable(rpad_enable),
+		  .dcrc_enable(rdcrc_enable),
 		  .data_enable(encrypted_rdata_enable)
 		  );
 

@@ -17,7 +17,7 @@ module dcrc_fifo (
 		  output wire 	   full
 		  );
 
-   flex_fifo #(8,64,6) CALL(
+   flex_fifo #(8,64,7) CALL(
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .r_enable(r_enable),
@@ -27,4 +27,4 @@ module dcrc_fifo (
 		       .empty(empty),
 		       .full(full)
 		       );
-endmodule // data_fifo
+endmodule // dcrc_fifo

@@ -38,8 +38,8 @@ module transmit_out(
 	    d_minus = 0;
 	 end
 	 else begin
-	    d_plus = 1;
-	    d_minus = 1;
+	    d_plus = 0;
+	    d_minus = 0;
 	 end
       end // else: !if(n_rst == 1'b0)
    end // always_ff @
