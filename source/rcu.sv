@@ -75,7 +75,7 @@ module rcu(
 	      rcving = 1;
 	      w_enable = 0;
 	      r_error = 0;
-	      if(eop == 1 & shift_enable == 1)
+	      if(eop == 1 && shift_enable == 1)
 		nstate = MERROR;
 	      else if(byte_recieved == 1)
 		nstate = ENDOFBYTE;
