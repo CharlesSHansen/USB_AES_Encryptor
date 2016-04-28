@@ -88,9 +88,14 @@ module encrypted_fifo(
 
 	FIVE : begin
 	   w_data = data[87:80];
-	   nstate = SIX;
+	   nstate = WAIT5;
 	end
 
+	WAIT5 : begin
+	   w_data = data[79:72];
+	   nstate = SIX;
+	end
+	
 	SIX : begin
 	   w_data = data[71:64];
 	   nstate = SEVEN;
