@@ -87,7 +87,7 @@ logic unsigned [7:0] captured_data; //one character at a time
 `define NULL 0
 
 initial begin
-	data_file = $fopen("./source/mixed_data.dat", "r");
+	data_file = $fopen("./source/usb_data.dat", "r");
 	if (data_file == `NULL) begin
 		$display("ERROR: Couldn't open input data file.");
 		$finish;

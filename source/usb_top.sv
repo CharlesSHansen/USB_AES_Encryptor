@@ -36,6 +36,7 @@ reg [127:0] data_in;
 reg ready, extract_ready;
 reg encrypt_data_full, encrypt_data_empty;
 reg [7:0] encrypted_r_data;
+reg fast_rdcrc_enable, fast_rnd_enable, fast_rpid_enable, fast_encrypted_rdata_enable;
 
 // GENERATE SLOW CLOCK = CLK/8
 reg [1:0] counter;
@@ -136,7 +137,7 @@ assign slow_clk = clk_flag;
    pid_fifo PID( //PID fifo
 		.clk(clk),
 		.n_rst(n_rst),
-		.r_enable(rpid_enable),
+		.r_enable(fast_rpid_enable),
 		.w_enable(enable_pid),
 		.w_data(rcv_data),
 		.r_data(r_pid),
@@ -147,7 +148,7 @@ assign slow_clk = clk_flag;
    nd_fifo NONDATA( //non-data fifo
 		    .clk(clk),
 		    .n_rst(n_rst),
-		    .r_enable(rnd_enable),
+		    .r_enable(fast_rnd_enable),
 		    .w_enable(enable_nondata),
 		    .w_data(rcv_data),
 		    .r_data(r_nd),
@@ -158,7 +159,7 @@ assign slow_clk = clk_flag;
    dcrc_fifo PADDING( //CRC data padding fifo
 		      .clk(clk),
 		      .n_rst(n_rst),
-		      .r_enable(rdcrc_enable),
+		      .r_enable(fast_rdcrc_enable),
 		      .w_enable(enable_pad),
 		      .w_data(rcv_data),
 		      .r_data(r_dcrc),
@@ -199,7 +200,7 @@ aes_control AES( //top level AES controller
 encrypted_fifo ENCRYPTED( //encrypted data fifo
 			.clk(clk),
 			.n_rst(n_rst),
-			.r_enable(encrypted_rdata_enable),
+			.r_enable(fast_encrypted_rdata_enable),
 			.complete(complete),
 			.raw_data(data_out),
 			.r_data(encrypted_r_data),
@@ -226,6 +227,35 @@ encrypted_fifo ENCRYPTED( //encrypted data fifo
 		  .data_enable(encrypted_rdata_enable)
 		  );
 
+slow_dcrc_enable SLOW_DCRC(
+		.clk(clk),
+		.n_rst(n_rst),
+		.slow_enable(rdcrc_enable),
+		.fast_enable(fast_rdcrc_enable)
+		);
+
+slow_nd_enable SLOW_ND(
+		.clk(clk),
+		.n_rst(n_rst),
+		.slow_enable(rnd_enable),
+		.fast_enable(fast_rnd_enable)
+		);
+
+data_slow_enable SLOW_DATA(
+		.clk(clk),
+		.n_rst(n_rst),
+		.slow_enable(encrypted_rdata_enable),
+		.fast_enable(fast_encrypted_rdata_enable)
+		);
+
+pid_slow_enable SLOW_PID(
+		.clk(clk),
+		.n_rst(n_rst),
+		.slow_enable(rpid_enable),
+		.fast_enable(fast_rpid_enable)
+		);
+
+
    transmit_shift WRITE_SHIFT( //output shift register for 8 bit -> serial data
 			      .clk(slow_clk),
 			      .n_rst(n_rst),
@@ -245,5 +275,6 @@ encrypted_fifo ENCRYPTED( //encrypted data fifo
 		     .d_plus(d_plus_out),
 		     .d_minus(d_minus_out)
 		     );
+
 
 endmodule // usb_top
