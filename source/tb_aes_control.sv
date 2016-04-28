@@ -45,11 +45,31 @@ module tb_aes_control
 		@(posedge tb_clk);
 		tb_ready = 0;
 		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		//tb_data_in = 128'h3243f6a8885a308d313198a2e0370734; // from NIST
 		tb_data_in = 128'h61646a6163656e746163746976617465; // expected = b1e9645c3fc771108b4ce598d2896ee5 
 		tb_ready = 1;
 		@(posedge tb_clk);
 		tb_ready = 0;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		tb_data_in = 128'h626564736f7265736265646672616d65; // expected = 36b8bd11fb127be91568ba69c370cbe5
