@@ -46,6 +46,10 @@ module encrypted_fifo(
    end
 
    always_comb begin
+      nstate = state;
+      increment = increment;
+      w_data = w_data;
+      data = data;
       case(state)
 	IDLE : begin
 	   increment = 0;

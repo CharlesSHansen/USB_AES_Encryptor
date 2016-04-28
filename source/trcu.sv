@@ -33,6 +33,7 @@ module trcu(
    reg 			     non_data, data;
    reg [1:0] 		     pid_remaining;
    reg [2:0] 		     wait_remaining;
+   reg 			     full;
    
    //Token Packets
    localparam [3:0] 			    token1 = 4'b0001;
@@ -50,6 +51,8 @@ module trcu(
    localparam [3:0] 			    hand1 = 4'b0010;
    localparam [3:0] 			    hand2 = 4'b1010;
    localparam [3:0] 			    hand3 = 4'b1110;
+
+   //End of File Handshake
    localparam [3:0] 			    hand4 = 4'b0110;
 
    //Start of Frame Packets
@@ -63,6 +66,12 @@ module trcu(
 	state <= IDLE;
       else
 	state <= nstate;
+   end
+   always_ff @ (posedge clk, posedge encrypt_full) begin
+      if(encrypt_full == 1'b1)
+	full <= 1;
+      else
+	full <= 0;
    end // always_ff @
 
    always_comb begin
@@ -86,7 +95,7 @@ module trcu(
 	      data = '0;
 	      pid_remaining = 0;
 	      wait_remaining = 0;
-	      if(encrypt_full == 1)
+	      if(full == 1)
 		nstate = READ_PID;
 	      else
 		nstate = IDLE;

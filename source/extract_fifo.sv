@@ -40,6 +40,10 @@ module extract_fifo(
    end
 
    always_comb begin
+      nstate = state;
+      pop = pop;
+      tmp = tmp;
+      rdy = rdy;
       case(state)
 	IDLE : begin
 	   tmp = '0;
