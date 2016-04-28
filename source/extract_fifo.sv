@@ -114,10 +114,11 @@ module extract_fifo(
 	   tmp[7:0] = data;
 	   nstate = WAIT;
 	   rdy = 1;
-	   pop = 0;
+	   pop = 1;
 	end
 	WAIT : begin
 	   nstate = IDLE;
+	   pop = 0;
 	end
       endcase // case (state)
    end // always_comb
