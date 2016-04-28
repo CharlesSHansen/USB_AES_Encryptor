@@ -25,34 +25,37 @@ module flex_fifo
    reg [STACKCNT-1:0] 		    write_point;
    reg [STACKCNT-1:0] 		    read_point;
    reg 				    not_used, not_used2;
-   wire 				    w_not_used;
-
+   wire 			    w_not_used;
+   reg [STACKCNT-1:0] 		    previous_write;
+   
    localparam count_to = STACKSIZE-1;
-      
+   
    
    genvar 			    index;
    
    always_ff @ (posedge clk, negedge n_rst) begin
       if(n_rst == 1'b0) begin
 	 memory <= 0;
-	not_used <= 0;
-	not_used2 <= 0;
+	 not_used <= 0;
+	 not_used2 <= 0;
+	 previous_write <= 0;
       end else begin
-	not_used <= 0;
-	not_used2 <= 0;
+	 not_used <= 0;
+	 not_used2 <= 0;
 	 memory <= nxt_memory;
+	 previous_write <= write_point;
       end
    end
-   
+
    flex_full_counter #(STACKCNT) WRITE (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(w_enable && !full), .rollover_val(count_to[STACKCNT-1:0]), .count_out(write_point), .rollover_flag(w_not_used));
    flex_full_counter #(STACKCNT) READ (.clk(clk), .n_rst(n_rst), .clr(not_used), .count_enable(r_enable && !empty), .rollover_val(count_to[STACKCNT-1:0]), .count_out(read_point), .rollover_flag(w_not_used));
 
    generate
       for(index = 0; index < STACKSIZE; index = index + 1) begin
-	always_comb begin
+	 always_comb begin
 	    if(write_point == index && w_enable && full == 0) begin
-	      nxt_memory[index] = w_data;
-		end		
+	       nxt_memory[index] = w_data;
+	    end		
 	    else
 	      nxt_memory[index] = memory[index];
 	 end
@@ -60,12 +63,12 @@ module flex_fifo
    endgenerate
    
    always_comb begin
-      if(write_point == read_point) 
+      if(previous_write == read_point) 
 	empty = 1;
       else
 	empty = 0;
       
-      if((write_point+1) % (STACKSIZE) == read_point)
+      if(previous_write == 15 && write_point == 0)
 	full = 1;
       else
 	full = 0;
@@ -75,4 +78,4 @@ module flex_fifo
    
 endmodule // flex_fifo
 
-	
+
