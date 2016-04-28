@@ -45,7 +45,7 @@ module extract_fifo(
 	   tmp = '0;
 	   rdy = 0;
 	   pop = 0;
-	   if(complete == 1'b1) begin
+	   if(full == 1'b1) begin
 	      nstate = ONE;
 	      pop = 1;
 	   end
@@ -53,67 +53,67 @@ module extract_fifo(
 	     nstate = IDLE;
 	end
 	ONE : begin
-	   tmp[7:0] = data;
+	   tmp[127:120] = data;
 	   nstate = TWO;
 	end
 	TWO : begin
-	   tmp[15:8] = data;
+	   tmp[119:112] = data;
 	   nstate = THREE;
 	end
 	THREE : begin
-	   tmp[23:16] = data;
+	   tmp[111:104] = data;
 	   nstate = FOUR;
 	end
 	FOUR : begin
-	   tmp[31:24] = data;
+	   tmp[103:96] = data;
 	   nstate = FIVE;
 	end
 	FIVE : begin
-	   tmp[39:32] = data;
+	   tmp[95:88] = data;
 	   nstate = SIX;
 	end
 	SIX : begin
-	   tmp[47:40] = data;
+	   tmp[87:80] = data;
 	   nstate = SEVEN;
 	end
 	SEVEN : begin
-	   tmp[55:48] = data;
+	   tmp[79:72] = data;
 	   nstate = EIGHT;
 	end
 	EIGHT : begin
-	   tmp[63:56] = data;
+	   tmp[71:64] = data;
 	   nstate = NINE;
 	end
 	NINE : begin
-	   tmp[71:64] = data;
+	   tmp[63:56] = data;
 	   nstate = TEN;
 	end
 	TEN : begin
-	   tmp[79:72] = data;
+	   tmp[55:48] = data;
 	   nstate = ELEVEN;
 	end
 	ELEVEN : begin
-	   tmp[87:80] = data;
+	   tmp[47:40] = data;
 	   nstate = TWELVE;
 	end
 	TWELVE : begin
-	   tmp[95:88] = data;
+	   tmp[39:32] = data;
 	   nstate = THIRTEEN;
 	end
 	THIRTEEN : begin
-	   tmp[103:96] = data;
+	   tmp[31:24] = data;
 	   nstate = FOURTEEN;
 	end
 	FOURTEEN : begin
-	   tmp[111:104] = data;
+	   tmp[23:16] = data;
 	   nstate = FIFTEEN;
 	end
 	FIFTEEN : begin
-	   tmp[119:112] = data;
+	   tmp[15:8] = data;
 	   nstate = SIXTEEN;
 	end
 	SIXTEEN : begin
-	   tmp[127:120] = data;
+	   tmp[7:0] = data;
 	   nstate = WAIT;
 	   rdy = 1;
 	   pop = 0;
