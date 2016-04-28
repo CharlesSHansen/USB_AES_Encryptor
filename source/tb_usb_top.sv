@@ -24,7 +24,7 @@ always begin : CLK_GEN
 	tb_clk = 1'b1;
 	#(CLK_PERIOD/2);
 end
-// END CLK GEN 
+// END CLK GEN
 
 // GENERATE SLOW CLOCK = CLK/8
 reg [1:0] counter;
@@ -74,34 +74,38 @@ initial begin
 	tb_n_rst = 1;
 end
 
-// BEGIN DATA EOP TIMER (count to 5 bytes) (sync -> PID -> data -> CRC -> crc)
-always @(posedge slow_clk) begin
-	if (tb_packet_counter == 3'b101) begin
-		tb_eop = 1;
-		tb_packet_counter = 3'b000;
-		@(posedge slow_clk); //hold EOP for 2 slow clock cycles
-	end else begin
-		tb_eop = 0;
-	end
-end
-// END DATA EOP TIMER
-
 always @(posedge slow_clk) begin
 	if (tb_n_rst) begin
-		scan_file = $fscanf(data_file, "%c", captured_data);
+		if (tb_packet_counter != 3'b101)
+			scan_file = $fscanf(data_file, "%c", captured_data);
 		if (!$feof(data_file)) begin
 			//use captured_data as a reg
-			//gets 1 character per 8 slow clock cycles
-			tb_data = captured_data;
-			tb_load_enable = 1;
-			@(posedge slow_clk);
-			tb_load_enable = 0;
-			@(posedge slow_clk);
-			//2 cycle delay for transmit D+ & D- to begin following input data
-			repeat (8) begin //8 bits @ 8 cycles each (slow_clk) for a readable speed for the RCU
-				@(posedge slow_clk);
-			end
+			//gets 1 character per 8 slow clock cycles (tb_clk/8)
 			tb_packet_counter = tb_packet_counter+1;
+			if (tb_packet_counter == 3'b110) begin
+				// BEGIN DATA EOP TIMER (count to 5 bytes) (sync -> PID -> data -> CRC -> crc)
+				tb_eop = 1;
+				tb_packet_counter = 3'b000;
+				tb_data = 8'b11111111; //waiting for data
+				@(posedge slow_clk); //hold EOP for 3 slow clock cycles
+				tb_load_enable = 0;
+				@(posedge slow_clk);
+				@(posedge slow_clk);
+				tb_eop = 0;
+				@(posedge slow_clk); //just enough delay for the RCU to be ready for another packet
+				// END DATA EOP TIMER
+			end else begin
+				tb_eop = 0;
+				tb_data = captured_data;
+				tb_load_enable = 1;
+				@(posedge slow_clk);
+				tb_load_enable = 0;
+				@(posedge slow_clk);
+				//2 cycle delay for transmit D+ & D- to begin following input data
+				repeat (8) begin //8 bits @ 8 cycles each (slow_clk) for a readable speed for the RCU
+					@(posedge slow_clk);
+				end
+			end
 		end
 	end
 end

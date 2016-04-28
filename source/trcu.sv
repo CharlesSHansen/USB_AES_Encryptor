@@ -31,8 +31,8 @@ module trcu(
    stateType nstate;
 
    reg 			     non_data, data;
-   reg [3:0] 		     pid_remaining;
-   reg [4:0] 		     wait_remaining;
+   reg [1:0] 		     pid_remaining;
+   reg [2:0] 		     wait_remaining;
    
    //Token Packets
    localparam [3:0] 			    token1 = 4'b0001;
@@ -110,27 +110,30 @@ module trcu(
 	      write_enable = 1;
 	      eop_enable = 0;
 	      //Token Packets
-	      if((pid_read[7:4] == token1) || (pid_read[7:4] == token2) || (pid_read[7:4] == token2) || (pid_read[7:4] == token2)) begin
+	      if((pid_read[7:4] == token1) || (pid_read[7:4] == token2) || (pid_read[7:4] == token3) || (pid_read[7:4] == token4)) begin
 		 non_data = 1;
 		 data = 0;
-		 pid_remaining = 2;
+		 pid_remaining = 2'b10;
 	      end
 	      //Data Packets
-	      else if((pid_read[7:4] == data1) || (pid_read[7:4] == data2) || (pid_read[7:4] == data2) || (pid_read[7:4] == data2)) begin
+	      else if((pid_read[7:4] == data1) || (pid_read[7:4] == data2) || (pid_read[7:4] == data3) || (pid_read[7:4] == data4)) begin
 		 data = 1;
 		 non_data = 0;
-	      end
- 	      //Handshake Packets
-	      else if((pid_read[7:4] == hand1) || (pid_read[7:4] == hand2) || (pid_read[7:4] == hand2) || (pid_read[7:4] == hand2)) begin
-		 non_data = 1;
 		 pid_remaining = 0;
 	      end
-	      //Start of Frame Packets
-	      else if((pid_read[7:4] == spec1) || (pid_read[7:4] == spec2) || (pid_read[7:4] == spec2) || (pid_read[7:4] == spec2)) begin
+ 	      //Handshake Packets
+	      else if((pid_read[7:4] == hand1) || (pid_read[7:4] == hand2) || (pid_read[7:4] == hand3) || (pid_read[7:4] == hand4)) begin
 		 non_data = 1;
-		 pid_remaining = 2;
+		 data = 0;
+		 pid_remaining = 2'b00;
 	      end
-	      wait_remaining = 7;
+	      //Start of Frame Packets
+	      if((pid_read[7:4] == spec1) || (pid_read[7:4] == spec2) || (pid_read[7:4] == spec3) || (pid_read[7:4] == spec4)) begin
+		 non_data = 1;
+		 data = 0;
+		 pid_remaining = 2'b10;
+	      end
+	      wait_remaining = 6;
 	      nstate = WAIT_SYNC;
 	   end // case: W_SYNC
 
@@ -156,7 +159,7 @@ module trcu(
 	   
 	   WRITE_PID : begin
 	      write_enable = 1;
-	      wait_remaining = 7;
+	      wait_remaining = 6;
 	      nstate = WAIT_PID;
 	   end
 	   
@@ -192,7 +195,7 @@ module trcu(
 
 	   READ_DATA : begin
 	      write_enable = 1;
-	      wait_remaining = 7;
+	      wait_remaining = 6;
 	      nstate = WAIT_DATA;
 	   end // case: READ
 
@@ -222,7 +225,7 @@ module trcu(
 		data_enable = 1;
 	      else
 		nd_enable = 1;
-	      wait_remaining = 7;
+	      wait_remaining = 6;
 	      write_enable = 1;
 	      nstate = WAIT_CRC;
 	   end // case: READ_CRC
@@ -251,7 +254,7 @@ module trcu(
 
 	   
 	   READ_CRC2 : begin
-	      wait_remaining = 7;
+	      wait_remaining = 6;
 	      write_enable = 1;
 	      dcrc_enable = 1;
 	      nstate = WAIT_CRC3;
@@ -279,9 +282,14 @@ module trcu(
 	   READ_ND : begin
 	      write = nd_read;
 	      write_enable = 1;
-	      wait_remaining = 7;
-	      pid_remaining = pid_remaining - 1;
-	      nstate = WAIT_ND;
+	      if(pid_remaining == 0) begin
+		 nstate = WRITE_EOP;
+	      end
+	      else begin
+		 wait_remaining = 6;
+		 pid_remaining = pid_remaining - 1;
+		 nstate = WAIT_ND;
+	      end
 	   end // case: READ_ND
 	   
 	   WAIT_ND : begin

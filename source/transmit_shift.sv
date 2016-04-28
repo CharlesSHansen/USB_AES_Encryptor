@@ -16,23 +16,22 @@ module transmit_shift(
 		      output reg      ready
 		      );
 
-   reg 				       shift_enable = 0;
-   
+   reg 				       shift_enable;
+
    always_ff @ (posedge clk, negedge n_rst) begin
-      if(!n_rst) begin
-	ready <= shift_enable;
-      end
-      else begin
+      if(n_rst == 0)
 	ready <= 0;
-      end
+      else
+	ready <= shift_enable;
    end
       
    always_comb begin
-      unique if(load_enable == 1) begin
+      shift_enable = ready;
+      if(load_enable == 1) begin
 	 shift_enable = 1;
       end
       else if(eop == 1)
-	shift_enable = 0;
+	 shift_enable = 0;
    end // always_comb
    
    flex_pts_sr #(8,1) call(

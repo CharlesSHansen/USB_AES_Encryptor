@@ -9,9 +9,9 @@
 module encrypted_fifo(
 		      input wire 	 clk,
 		      input wire 	 n_rst,
-		      input wire [127:0] raw_data,
 		      input wire 	 r_enable,
 		      input wire 	 complete,
+		      input wire [127:0] raw_data,
 		      output logic [7:0] r_data, 
 		      output logic 	 empty,
 		      output logic 	 full

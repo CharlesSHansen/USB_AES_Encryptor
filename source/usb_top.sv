@@ -29,37 +29,61 @@ module usb_top(
    reg 			   eop, shift_enable;
    reg 			   byte_recieved;
    reg 			   encrypted_data;
-reg ready;
 
+reg [127:0] data_in;
+reg [127:0] data_out;
+reg ready, complete, extract_ready;
+reg encrypt_data_full, encrypt_data_empty;
+reg [7:0] encrypted_r_data;
 
-   sync_high SHI(
+// GENERATE SLOW CLOCK = CLK/8
+reg [1:0] counter;
+reg slow_clk;
+reg clk_flag;
+always @(posedge clk, negedge n_rst) begin
+	if (!n_rst) begin
+		clk_flag <= 0;
+		counter <= 2'b00;
+	end else begin
+		if (counter == 2'b11) begin
+			counter <= 2'b00;
+			clk_flag <= clk_flag^1;
+		end else begin
+			counter <= counter+1;
+		end
+	end
+end
+assign slow_clk = clk_flag;
+// END SLOW CLOCK GEN
+
+   sync_high SHI( //input data usb sycnhronizer
 		 .clk(clk),
 		 .n_rst(n_rst),
 		 .async_in(d_plus_in),
 		 .sync_out(d_plus_sync)
 		 );
 
-   sync_low SHL(
+   sync_low SHL( //input usb data synchronizer
 		.clk(clk),
 		.n_rst(n_rst),
 		.async_in(d_minus_in),
 		.sync_out(d_minus_sync)
 		);
 
-   eop_detect REOP(
+   eop_detect REOP( //input usb eop detector
 		   .d_plus(d_plus_sync),
 		   .d_minus(d_minus_sync),
 		   .eop(eop)
 		   );
 
-   edge_detect EDETECT(
+   edge_detect EDETECT( //input usb edge detector
 		       .clk(clk),
 		       .n_rst(n_rst),
 		       .d_plus(d_plus_sync),
 		       .d_edge(d_edge)
 		       );
 
-   decode DEC(
+   decode DEC( //input usb data decoder
 	      .clk(clk),
 	      .n_rst(n_rst),
 	      .d_plus(d_plus_sync),
@@ -67,7 +91,7 @@ reg ready;
 	      .eop(eop),
 	      .d_orig(d_orig)
 	      );
-   timer TIM(
+   timer TIM( //input usb timer
 	     .clk(clk),
 	     .n_rst(n_rst),
 	     .d_edge(d_edge),
@@ -76,7 +100,7 @@ reg ready;
 	     .byte_recieved(byte_recieved)
 	     );
 
-   shift_register SR(
+   shift_register SR( //input usb shift register
 		     .clk(clk),
 		     .n_rst(n_rst),
 		     .shift_enable(shift_enable),
@@ -84,18 +108,7 @@ reg ready;
 		     .rcv_data(rcv_data)
 		     );
 
-   pid_decode PID_DECODE(
-			 .clk(clk),
-			 .n_rst(n_rst),
-			 .w_enable(w_enable),
-			 .rcv_data(rcv_data),
-			 .enable_pad(enable_pad),
-			 .enable_data(enable_data),
-			 .enable_pid(enable_pid),
-			 .enable_nondata(enable_nondata)
-			 );
-
-   rcu RRCU(
+   rcu RRCU( //reciever control unit state machine
 	    .clk(clk),
 	    .n_rst(n_rst),
 	    .d_edge(d_edge),
@@ -108,44 +121,16 @@ reg ready;
 	    .r_error(r_error)
 	    );
 
-    trcu TRCU_CALL(
-		  .clk(clk),
-		  .n_rst(n_rst),
-		  .encrypt_full(data_full),
-		  .pid_empty(pid_empty),
-		  .data_empty(data_empty),
-		  .pid_read(r_pid),
-		  .nd_read(r_nd),
-		  .dcrc_read(r_dcrc),
-		  .data_read(r_data),
-		  .write(shift_write),
-		  .write_enable(enable_write),
-		  .nd_enable(rnd_enable),
-		  .eop_enable(enable_eop),
-		  .pid_enable(rpid_enable),
-		  .dcrc_enable(rpad_enable),
-		  .data_enable(rdata_enable)
-		  );
-   
-   transmit_shift WRITE_SHIFT(
-			      .clk(clk),
-			      .n_rst(n_rst),
-			      .load_enable(enable_write),
-			      .data(shift_write),
-			      .eop(enable_eop),
-			      .data_out(transmit_out),
-			      .ready(ready)
-			      );
-   
-   transmit DATA_OUT(
-		     .clk(clk),
-		     .n_rst(n_rst),
-		     .data(transmit_out),
-		     .ready(ready),
-		     .eop(eop),
-		     .d_plus(d_plus_out),
-		     .d_minus(d_minus_out)
-		     );
+   pid_decode PID_DECODE( //packet handling state machine
+			 .clk(clk),
+			 .n_rst(n_rst),
+			 .w_enable(w_enable),
+			 .rcv_data(rcv_data),
+			 .enable_pad(enable_pad),
+			 .enable_data(enable_data),
+			 .enable_pid(enable_pid),
+			 .enable_nondata(enable_nondata)
+			 );
 
    pid_fifo PID( //PID fifo
 		.clk(clk),
@@ -157,19 +142,6 @@ reg ready;
 		.empty(pid_empty),
 		.full(pid_full)
 		);
-
-   /*
-   encrypted_fifo ENCRYPTED(
-			    .clk(clk),
-			    .n_rst(n_rst),
-			    .r_enable(rencreypt_enable),
-			    .w_enable(enable_encrypt),
-			    .w_data(encrypted_data),
-			    .r_data(r_encrypt),
-			    .empty(encrypt_empty),
-			    .full(encrypt_full)
-			    );
-    */
    
    nd_fifo NONDATA( //non-data fifo
 		    .clk(clk),
@@ -203,5 +175,74 @@ reg ready;
 		   .empty(data_empty),
 		   .full(data_full)
 		   );
+
+extract_fifo EXTRACT( //extractor to pack 128 bits from data fifo
+		.clk(clk),
+		.n_rst(n_rst),
+		.full(data_full),
+		.data(r_data),
+		.pop(rdata_enable),
+		.ready(extract_ready),
+		.out(data_in)
+		);
+
+aes_control AES( //top level AES controller
+		.clk(clk),
+		.n_rst(n_rst),
+		.ready(extract_ready),
+		.data_in(data_in),
+		.complete(complete),
+		.data_out(data_out)
+		);
+
+encrypted_fifo ENCRYPTED( //encrypted data fifo
+			.clk(clk),
+			.n_rst(n_rst),
+			.r_enable(encrypted_rdata_enable),
+			.complete(complete),
+			.raw_data(data_out),
+			.r_data(encrypted_r_data),
+			.empty(encrypt_data_empty),
+			.full(encrypt_data_full)
+			);
+
+    trcu TRCU_CALL( //transmitter control unit state machine
+		  .clk(slow_clk),
+		  .n_rst(n_rst),
+		  .encrypt_full(encrypt_data_full),
+		  .pid_empty(pid_empty),
+		  .data_empty(encrypt_data_empty),
+		  .pid_read(r_pid),
+		  .nd_read(r_nd),
+		  .dcrc_read(r_dcrc),
+		  .data_read(encrypted_r_data),
+		  .write(shift_write),
+		  .write_enable(enable_write),
+		  .nd_enable(rnd_enable),
+		  .eop_enable(enable_eop),
+		  .pid_enable(rpid_enable),
+		  .dcrc_enable(rpad_enable),
+		  .data_enable(encrypted_rdata_enable)
+		  );
+
+   transmit_shift WRITE_SHIFT( //output shift register for 8 bit -> serial data
+			      .clk(slow_clk),
+			      .n_rst(n_rst),
+			      .load_enable(enable_write),
+			      .data(shift_write),
+			      .eop(enable_eop),
+			      .data_out(transmit_out),
+			      .ready(ready)
+			      );
+   
+   transmit_out DATA_OUT( //output USB transmitter for serial data -> D+ & D-
+		     .clk(slow_clk),
+		     .n_rst(n_rst),
+		     .data(transmit_out),
+		     .ready(ready),
+		     .eop(enable_eop),
+		     .d_plus(d_plus_out),
+		     .d_minus(d_minus_out)
+		     );
 
 endmodule // usb_top
