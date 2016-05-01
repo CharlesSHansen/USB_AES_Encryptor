@@ -10,7 +10,7 @@ module slow_dcrc_enable(
 			input wire clk,
 			input wire n_rst,
 			input wire slow_enable,
-			input reg fast_enable
+			output reg fast_enable
 			);
 
    flex_slow PID_SLOW(.clk(clk), .n_rst(n_rst), .slow_enable(slow_enaable), .fast_enable(fast_enable));

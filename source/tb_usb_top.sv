@@ -117,7 +117,7 @@ always @(posedge slow_clk) begin
 		if (!$feof(data_file)) begin
 			//use captured_data as a reg
 			//gets 1 character per 8 slow clock cycles (tb_clk/8)
-			if (captured_data == 8'b10000000) begin
+			if (captured_data == 8'b01111111) begin
 				last_sync = 1;
 			end else begin
 				if (last_sync == 1) begin

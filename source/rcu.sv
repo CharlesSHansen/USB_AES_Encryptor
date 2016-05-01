@@ -64,7 +64,7 @@ module rcu(
 	      rcving = 1;
 	      r_error = 0;
 	      w_enable = 0;
-	      if(rcv_data == 8'b10000000)
+	      if(rcv_data == 8'b01111111)
 		nstate = CONT_RECIEVE;
 	      else
 		nstate = DISREGARD;
