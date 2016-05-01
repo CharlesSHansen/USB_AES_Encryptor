@@ -26,7 +26,7 @@ module trcu(
 	    output reg 	     data_enable
 	    );
    
-   typedef enum 	     bit [4:0] {IDLE, READ_PID, W_SYNC, WAIT_SYNC, WAIT_SYNC2, WRITE_PID, WAIT_PID, WAIT_PID2, READ_ND, WAIT_ND, WAIT_ND2, READ_DATA, WAIT_DATA, WAIT_DATA2, READ_CRC, WAIT_CRC, WAIT_CRC2, READ_CRC2, WAIT_CRC3, WAIT_CRC4, WRITE_EOP, WAIT_EOP} stateType;
+   typedef enum 	     bit [4:0] {IDLE, READ_PID, W_SYNC, WAIT_SYNC, WAIT_SYNC2, WRITE_PID, WAIT_PID, WAIT_PID2, READ_ND, WAIT_ND, WAIT_ND2, READ_DATA, WAIT_DATA, WAIT_DATA2, READ_CRC, WAIT_CRC, WAIT_CRC2, READ_CRC2, WAIT_CRC3, WAIT_CRC4, WRITE_EOP, WAIT_EOP, TRANSMIT_PADDING, WAIT_PAD, WAIT_PAD2} stateType;
    stateType state;
    stateType nstate;
 
@@ -34,6 +34,7 @@ module trcu(
    reg [1:0] 		     pid_remaining;
    reg [2:0] 		     wait_remaining;
    reg 			     full;
+   reg 			     pad;
    
    //Token Packets
    localparam [3:0] 			    token1 = 4'b0001;
@@ -56,7 +57,7 @@ module trcu(
    localparam [3:0] 			    hand4 = 4'b0110;
 
    //Start of Frame Packets
-   localparam [3:0] 			     spec1 = 4'b1100;
+   localparam [3:0] 			    spec1 = 4'b1100;
    localparam [3:0] 			    spec2 = 4'b1100;
    localparam [3:0] 			    spec3 = 4'b1000;
    localparam [3:0] 			    spec4 = 4'b0100;
@@ -86,6 +87,7 @@ module trcu(
       data = data;
       eop_enable = eop_enable;
       write = write;
+      pad = pad;
       
       begin : RCU_TRANSMIT
 	 case(state)
@@ -93,6 +95,7 @@ module trcu(
 	      non_data = 0;
 	      eop_enable = 1;
 	      data = '0;
+	      pad = 0;
 	      pid_remaining = 0;
 	      wait_remaining = 0;
 	      if(full == 1)
@@ -109,15 +112,19 @@ module trcu(
 	      if((data_empty == 1) && (pid_empty == 1)) begin
 		 nstate = IDLE;
 	      end
+	      else if((data_empty == 0) && (pid_empty == 1)) begin
+		 pad = 1;
+	      end
 	      else begin
 		 nstate = W_SYNC;
 	      end
 	   end // case: READ_PID
 
 	   W_SYNC : begin
-	      write = 8'b10000000;
+	      write = 8'b01111111;
 	      write_enable = 1;
 	      eop_enable = 0;
+	      pad = 0;
 	      //Token Packets
 	      if((pid_read[7:4] == token1) || (pid_read[7:4] == token2) || (pid_read[7:4] == token3) || (pid_read[7:4] == token4)) begin
 		 non_data = 1;
@@ -147,19 +154,23 @@ module trcu(
 	   end // case: W_SYNC
 
 	   WAIT_SYNC : begin
-	      if(wait_remaining == 0) begin
+	      if(wait_remaining == 0 && pad == 0) begin
 		 write = pid_read;
 		 nstate = WRITE_PID;
-	      end else begin
+	      end else if(wait_remaing == 0 && pad == 1) begin
+		 nstate = TRANSMIT_PADDING;
+	      end  else begin
 		 wait_remaining = wait_remaining - 1'b1;
 		 nstate = WAIT_SYNC2;
 	      end
 	   end
 
 	   WAIT_SYNC2 : begin
-	      if(wait_remaining == 0) begin
+	      if(wait_remaining == 0 && pad == 0) begin
 		 write = pid_read;
 		 nstate = WRITE_PID;
+	      end else if(wait_remaing == 0 && pad == 1) begin
+		 nstate = TRANSMIT_PADDING;
 	      end else begin
 		 wait_remaining = wait_remaining - 1'b1;
 		 nstate = WAIT_SYNC;
@@ -339,7 +350,47 @@ module trcu(
 	      pid_enable = 1;
 	      nstate = READ_PID;
 	   end
-	 endcase // case (state)
+
+	   TRANSMIT_PADDING : begin
+	      write = data1;
+	      nstate = PAD_WAIT;
+	      wait_remaing = 6;
+	   end
+
+	   WAIT_PID : begin
+	      if(wait_remaining != 1'b0) begin
+		 nstate = WAIT_PID2;
+		 wait_remaining = wait_remaining - 1;
+	      end
+	      else begin
+		 if(data == 1) begin
+		    write = data_read;
+		    nstate = READ_DATA;
+		 end else begin
+		    nstate = READ_ND;
+		 end
+	      end
+	   end // case: WAIT_SYNC
+	   
+	   PAD_WAIT : begin
+	      if(wait_remaing == 0) begin
+		 nstate = WRITE_DATA;
+	      end
+	      else begin
+		 wait_remaing = wait_remaing - 1;
+		 nstate = PAD_WAIT2;
+	      end
+	   end
+
+	   PAD_WAIT2 : begin
+	      if(wait_remaining == 0) begin
+		 nstate = WRITE_DATA;
+	      end else begin
+		 wait_remaing = wait_remaing - 1;
+		 nstate = PAD_WAIT;
+	      end
+	   end
+	   endcase // case (state)
       end // block: RCU_TRANSMIT
    end // always_comb
 endmodule // RCU_Transmit

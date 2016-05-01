@@ -2,7 +2,9 @@
 // File name:   transmit.sv
 // Created:     4/20/2016
 // Author:      Charles Hansen
-// Lab Section: 337-04
+1;
+2802;
+0c// Lab Section: 337-04
 // Version:     1.0  Initial Design Entry
 // Description: Converts binary to NRZI Encoding
 
