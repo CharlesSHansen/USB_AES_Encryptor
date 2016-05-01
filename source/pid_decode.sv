@@ -25,7 +25,8 @@ module pid_decode(
 		  output logic 	    enable_pad,
 		  output logic	    enable_data,
 		  output logic	    enable_pid,
-		  output logic	    enable_nondata
+		  output logic	    enable_nondata,
+		  output logic      eof
 		  );
 
    reg [2:0] packet_counter;
@@ -46,7 +47,9 @@ module pid_decode(
    localparam [3:0] 			    hand1 = 4'b0010;
    localparam [3:0] 			    hand2 = 4'b1010;
    localparam [3:0] 			    hand3 = 4'b1110;
-   localparam [3:0] 			    hand4 = 4'b0110;
+
+   //EOF packet
+   localparam [3:0] 			    eof_packet = 4'b0110;
 
    //Start of Frame Packet
    localparam [3:0] 			    spec1 = 4'b1100;
@@ -71,6 +74,7 @@ always_comb begin
 	enable_data = 0;
 	enable_pid = 0;
 	enable_nondata = 0;
+	eof = 0;
 	next_state = state;
    packet_counter = packet_counter;
 	case(state)
@@ -85,26 +89,32 @@ always_comb begin
 		packet_counter = 0;
 		if (w_enable == 1)
 		begin
-			enable_pid = 1; //write PID to the pid_fifo from w_data
-			//decide what type of packet was just received
-			if ((rcv_data[7:4] == data1) || (rcv_data[7:4] == data2) || (rcv_data[7:4] == data3) || (rcv_data[7:4] == data4))
+			if (rcv_data[7:4] == eof_packet)
 			begin
-				next_state = WAIT_DATA;
+				eof = 1;
+				next_state = WAIT_IDLE; // end of file, pad with 0's
 			end else begin
-				next_state = WAIT_NON_DATA;
-				if((rcv_data[7:4] == token1) || (rcv_data[7:4] == token2) || (rcv_data[7:4] == token3) || (rcv_data[7:4] == token4))
+				enable_pid = 1; //write PID to the pid_fifo from w_data
+				//decide what type of packet was just received
+				if ((rcv_data[7:4] == data1) || (rcv_data[7:4] == data2) || (rcv_data[7:4] == data3) || (rcv_data[7:4] == data4))
 				begin
-					packet_counter = 2; // 2 bytes of token packet 
-				end else if((rcv_data[7:4] == hand1) || (rcv_data[7:4] == hand2) || (rcv_data[7:4] == hand3) || (rcv_data[7:4] == hand4))
-				begin
-					next_state = WAIT_IDLE; // only pid in handshake
-				end else if((rcv_data[7:4] == spec1) || (rcv_data[7:4] == spec2) || (rcv_data[7:4] == spec3) || (rcv_data[7:4] == spec4))
-				begin
-					packet_counter = 2; // 2 bytes of start of frame packet
+					next_state = WAIT_DATA;
 				end else begin
-					next_state = WAIT_IDLE;
-				end
-			end
+					next_state = WAIT_NON_DATA;
+					if((rcv_data[7:4] == token1) || (rcv_data[7:4] == token2) || (rcv_data[7:4] == token3) || (rcv_data[7:4] == token4))
+					begin
+						packet_counter = 2; // 2 bytes of token packet 
+					end else if((rcv_data[7:4] == hand1) || (rcv_data[7:4] == hand2) || (rcv_data[7:4] == hand3))
+					begin
+						next_state = WAIT_IDLE; // only pid in handshake
+					end else if((rcv_data[7:4] == spec1) || (rcv_data[7:4] == spec2) || (rcv_data[7:4] == spec3) || (rcv_data[7:4] == spec4))
+					begin
+						packet_counter = 2; // 2 bytes of start of frame packet
+					end else begin
+						next_state = WAIT_IDLE;
+					end 
+				end //end not data
+			end //end not eof
 		end
 		else
 			next_state = IDLE;

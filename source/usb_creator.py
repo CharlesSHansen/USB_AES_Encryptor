@@ -3,11 +3,12 @@ from random import *
 import sys
 import binascii
 
-sync = '0b10000000'
+sync = '0b01111111'
 crc = '0b00000000'
+end_of_file = '0b01101001'
 token_pids = ['0b00011110', '0b10010110', '0b01011010', '0b11010010']
 data_pids = ['0b00111100', '0b10110100', '0b01111000', '0b11110000']
-handshake_pids = ['0b00101101', '0b10100101', '0b11100001', '0b01101001']
+handshake_pids = ['0b00101101', '0b10100101', '0b11100001']
 sof_pids = ['0b11000011', '0b11000011', '0b10000111', '0b01001011']
 
 def usb_data():
@@ -33,6 +34,8 @@ def usb_data():
                     byte_data_packet = [int2bytes(item) for item in integer_data_packet]
                     for item in byte_data_packet:
                         usb_file.write(item)
+            usb_file.write(int2bytes(int(sync, 2)))
+            usb_file.write(int2bytes(int(end_of_file, 2)))
     
     with open("./packet_data.txt", "wb") as packet_file:
         while packet_counter > 0:
@@ -40,7 +43,7 @@ def usb_data():
             if (packet_type == 0): #token
                 data = [sync, token_pids[randint(0,3)], '0b01010101', '0b00110011']
             elif (packet_type == 1): #handshake
-                data = [sync, handshake_pids[randint(0,3)]]
+                data = [sync, handshake_pids[randint(0,2)]]
             elif (packet_type == 2): #start of frame
                 data = [sync, sof_pids[randint(0,3)], '0b11110000', '0b11001100']
             data_ints = [int(item, 2) for item in data]
@@ -48,6 +51,8 @@ def usb_data():
             for item in data_bytes:
                 packet_file.write(item)
             packet_counter -= 1
+        packet_file.write(int2bytes(int(sync, 2)))
+        packet_file.write(int2bytes(int(end_of_file, 2)))
     return
 
 def mixed_data():
@@ -56,29 +61,29 @@ def mixed_data():
             for line in data_file:
                 for character in line:
                     if (randint(0,5) == 1):
-                        print("writing a non-data packet")
                         packet_type = randint(0,2)
                         if (packet_type == 0): #token
                             data = [sync, token_pids[randint(0,3)], '0b01010101', '0b00110011']
                         elif (packet_type == 1): #handshake
-                            data = [sync, handshake_pids[randint(0,3)]]
+                            data = [sync, handshake_pids[randint(0,2)]]
                         elif (packet_type == 2): #start of frame
                             data = [sync, sof_pids[randint(0,3)], '0b11110000', '0b11001100']
                         data_ints = [int(item, 2) for item in data]
                         data_bytes = [int2bytes(item) for item in data_ints]
                         for item in data_bytes:
                             mixed_file.write(item)
-                    else:
-                        first_half = [sync, data_pids[randint(0,3)]]
-                        second_half = [crc, crc]
-                        first_int = [int(item, 2) for item in first_half]
-                        second_int = [int(item, 2) for item in second_half]
-                        integer_data_packet = first_int
-                        integer_data_packet.append(ord(character))
-                        integer_data_packet += second_int
-                        byte_data_packet = [int2bytes(item) for item in integer_data_packet]
-                        for item in byte_data_packet:
-                            mixed_file.write(item)
+                    first_half = [sync, data_pids[randint(0,3)]]
+                    second_half = [crc, crc]
+                    first_int = [int(item, 2) for item in first_half]
+                    second_int = [int(item, 2) for item in second_half]
+                    integer_data_packet = first_int
+                    integer_data_packet.append(ord(character))
+                    integer_data_packet += second_int
+                    byte_data_packet = [int2bytes(item) for item in integer_data_packet]
+                    for item in byte_data_packet:
+                        mixed_file.write(item)
+            mixed_file.write(int2bytes(int(sync, 2)))
+            mixed_file.write(int2bytes(int(end_of_file, 2)))
     return
 
 def text_to_bits(text, encoding='utf-8', errors='surrogatepass'):

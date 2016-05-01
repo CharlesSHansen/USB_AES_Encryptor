@@ -34,7 +34,9 @@ localparam [3:0] 			    data4 = 4'b1111;
 localparam [3:0] 			    hand1 = 4'b0010;
 localparam [3:0] 			    hand2 = 4'b1010;
 localparam [3:0] 			    hand3 = 4'b1110;
-localparam [3:0] 			    hand4 = 4'b0110;
+
+//EOF Packet
+localparam [3:0] 			    eof = 4'b0110;
 
 //Start of Frame Packet
 localparam [3:0] 			    spec1 = 4'b1100;
@@ -87,7 +89,7 @@ logic unsigned [7:0] captured_data; //one character at a time
 `define NULL 0
 
 initial begin
-	data_file = $fopen("./source/usb_data.dat", "r");
+	data_file = $fopen("./source/mixed_data.dat", "r");
 	if (data_file == `NULL) begin
 		$display("ERROR: Couldn't open input data file.");
 		$finish;
@@ -123,7 +125,7 @@ always @(posedge slow_clk) begin
 						tb_packet_counter = 3'b001; // (sync -> PID -> data -> CRC -> CRC -> eop)
 					if((captured_data[7:4] == token1) || (captured_data[7:4] == token2) || (captured_data[7:4] == token3) || (captured_data[7:4] == token4))
 						tb_packet_counter = 3'b010; // (sync -> PID -> byte -> byte)
-					if((captured_data[7:4] == hand1) || (captured_data[7:4] == hand2) || (captured_data[7:4] == hand3) || (captured_data[7:4] == hand4))
+					if((captured_data[7:4] == hand1) || (captured_data[7:4] == hand2) || (captured_data[7:4] == hand3) || (captured_data[7:4] == eof))
 						tb_packet_counter = 3'b100; // (sync -> PID -> eop)
 					if((captured_data[7:4] == spec1) || (captured_data[7:4] == spec2) || (captured_data[7:4] == spec3) || (captured_data[7:4] == spec4))
 						tb_packet_counter = 3'b010; // (sync -> PID -> byte -> byte)

@@ -131,7 +131,8 @@ assign slow_clk = clk_flag;
 			 .enable_pad(enable_pad),
 			 .enable_data(enable_data),
 			 .enable_pid(enable_pid),
-			 .enable_nondata(enable_nondata)
+			 .enable_nondata(enable_nondata),
+			 .eof(data_full)
 			 );
 
    pid_fifo PID( //PID fifo
