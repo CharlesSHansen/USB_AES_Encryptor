@@ -33,7 +33,7 @@ module usb_top(
    reg 			   encrypted_data;
 
 reg [127:0] data_in;
-reg ready, extract_ready;
+reg ready, extract_ready, eof;
 reg encrypt_data_full, encrypt_data_empty;
 reg [7:0] encrypted_r_data;
 reg fast_rdcrc_enable, fast_rnd_enable, fast_rpid_enable, fast_encrypted_rdata_enable;
@@ -81,7 +81,7 @@ assign slow_clk = clk_flag;
    edge_detect EDETECT( //input usb edge detector
 		       .clk(clk),
 		       .n_rst(n_rst),
-		       .d_plus(d_plus_sync),
+		       .d_minus(d_minus_sync),
 		       .d_edge(d_edge)
 		       );
 
@@ -132,7 +132,7 @@ assign slow_clk = clk_flag;
 			 .enable_data(enable_data),
 			 .enable_pid(enable_pid),
 			 .enable_nondata(enable_nondata),
-			 .eof(data_full)
+			 .eof(eof)
 			 );
 
    pid_fifo PID( //PID fifo
@@ -183,6 +183,7 @@ extract_fifo EXTRACT( //extractor to pack 128 bits from data fifo
 		.clk(clk),
 		.n_rst(n_rst),
 		.full(data_full),
+		.eof(eof),
 		.data(read_data),
 		.pop(rdata_enable),
 		.ready(extract_ready),

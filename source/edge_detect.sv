@@ -9,18 +9,18 @@
 module edge_detect (
 		    input wire clk,
 		    input wire n_rst,
-		    input wire d_plus,
+		    input wire d_minus,
 		    output reg d_edge
 		    );
    reg 				ff_1;
    always_ff @ (posedge clk, negedge n_rst) begin
       if(1'b0 == n_rst) begin
-	 ff_1 <= 1;
+	 ff_1 <= 0;
 	 d_edge <= 0;
       end
       else begin
-	 ff_1 <= d_plus;
-	 d_edge <= ff_1 ^ d_plus;
+	 ff_1 <= d_minus;
+	 d_edge <= ff_1 ^ d_minus;
       end
    end
 

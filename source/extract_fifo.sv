@@ -9,7 +9,8 @@
 module extract_fifo(
 		    input wire 		 clk,
 		    input wire 		 n_rst,
-		    input wire 		 full,
+		    input logic 	 full,
+		    input logic		 eof,
 		    input wire [7:0] 	 data,
 		    output logic 	 pop,
 		    output logic 	 ready,
@@ -49,7 +50,7 @@ module extract_fifo(
 	   tmp = '0;
 	   rdy = 0;
 	   pop = 0;
-	   if(full == 1'b1) begin
+	   if((full == 1'b1) || (eof == 1'b1)) begin
 	      pop = 1;
 	      tmp[127:120] = data;
 	      nstate = TWO;

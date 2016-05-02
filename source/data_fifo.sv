@@ -14,7 +14,7 @@ module data_fifo(
 		  input wire [7:0] w_data,
 		  output wire [7:0] r_data,
 		  output wire 	   empty,
-		  output wire 	   full
+		  output logic 	   full
 		  );
 
    flex_fifo #(8,16,5) CALL(
