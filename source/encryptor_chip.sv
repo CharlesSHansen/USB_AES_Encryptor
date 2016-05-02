@@ -19,7 +19,7 @@ module encryptor_chip(
 		      output wire out_gnd
 	       );
 
-   reg 			   rdata_enable, rnd_enable, rpid_enable, rdcrc_enable, rencrypt_enable, clk;
+   reg 				  rdata_enable, rnd_enable, rpid_enable, rdcrc_enable, rencrypt_enable;
    reg [7:0] 		   read_data, r_nd, r_pid, r_dcrc, r_encrypt, shift_write, rcv_data;
    reg 			   data_empty, pad_empty, pid_empty, nondata_empty, encrypt_empty;
    reg 			   data_full, pad_full, pid_full, nondata_full, encrypt_full;
@@ -79,7 +79,7 @@ assign slow_clk = clk_flag;
    edge_detect EDETECT( //input usb edge detector
 		       .clk(clk),
 		       .n_rst(n_rst),
-		       .d_plus(d_plus_sync),
+		       .d_minus(d_minus_sync),
 		       .d_edge(d_edge)
 		       );
 
