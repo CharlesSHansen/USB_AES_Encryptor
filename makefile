@@ -17,11 +17,14 @@ include /home/ecegrid/a/ece337/Course_Prod/course_make_vars
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
 COMPONENT_FILES	:= sync_high.sv sync_low.sv eop_detect.sv edge_detect.sv decode.sv timer.sv shift_register.sv pid_decode.sv rcu.sv trcu.sv transmit_shift.sv transmit.sv pid_fifo.sv nd_fifo.sv dcrc_fifo.sv data_fifo.sv flex_counter.sv flex_fifo.sv flex_pts_sr.sv flex_stp_sr.sv flex_full_counter.sv extract_fifo.sv aes_control.sv encrypted_fifo.sv aes_key_expansion.sv aes_rounds.sv addRoundKey.sv subBytes.sv shiftRows.sv mixColumns.sv sBox.sv aes_g_function.sv transmit_out.sv slow_dcrc_enable.sv slow_nd_enable.sv data_slow_enable.sv pid_slow_enable.sv flex_slow.sv
+#COMPONENT_FILES := subBytes.sv sBox.sv aes_g_function.sv
 
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
-TOP_LEVEL_FILE	:= usb_top.sv
+TOP_LEVEL_FILE	:= encryptor_chip.sv
+#TOP_LEVEL_FILE := aes_control.sv
+#TOP_LEVEL_FILE := aes_key_expansion.sv
 
 # Specify the filepath of the test bench you want to use (ie. tb_top_level.sv)
 # (do not include the source folder in the name)
