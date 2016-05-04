@@ -36,23 +36,24 @@ def usb_data():
                         usb_file.write(item)
             usb_file.write(int2bytes(int(sync, 2)))
             usb_file.write(int2bytes(int(end_of_file, 2)))
+            print("finished writing data file as usb data")
     
-    with open("./packet_data.txt", "wb") as packet_file:
-        while packet_counter > 0:
-            packet_type = randint(0,2)
-            if (packet_type == 0): #token
-                data = [sync, token_pids[randint(0,3)], '0b01010101', '0b00110011']
-            elif (packet_type == 1): #handshake
-                data = [sync, handshake_pids[randint(0,2)]]
-            elif (packet_type == 2): #start of frame
-                data = [sync, sof_pids[randint(0,3)], '0b11110000', '0b11001100']
-            data_ints = [int(item, 2) for item in data]
-            data_bytes = [int2bytes(item) for item in data_ints]
-            for item in data_bytes:
-                packet_file.write(item)
-            packet_counter -= 1
-        packet_file.write(int2bytes(int(sync, 2)))
-        packet_file.write(int2bytes(int(end_of_file, 2)))
+    #with open("./packet_data.txt", "wb") as packet_file:
+    #    while packet_counter > 0:
+    #        packet_type = randint(0,2)
+    #        if (packet_type == 0): #token
+    #            data = [sync, token_pids[randint(0,3)], '0b01010101', '0b00110011']
+    #        elif (packet_type == 1): #handshake
+    #            data = [sync, handshake_pids[randint(0,2)]]
+    #        elif (packet_type == 2): #start of frame
+    #            data = [sync, sof_pids[randint(0,3)], '0b11110000', '0b11001100']
+    #        data_ints = [int(item, 2) for item in data]
+    #        data_bytes = [int2bytes(item) for item in data_ints]
+    #        for item in data_bytes:
+    #            packet_file.write(item)
+    #        packet_counter -= 1
+    #    packet_file.write(int2bytes(int(sync, 2)))
+    #    packet_file.write(int2bytes(int(end_of_file, 2)))
     return
 
 def mixed_data():
@@ -102,4 +103,4 @@ def int2bytes(i):
 
 if __name__ == "__main__":
     usb_data()
-    mixed_data()
+    #mixed_data()
